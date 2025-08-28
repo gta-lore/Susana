@@ -324,6 +324,15 @@
             color: var(--neon-blue);
             font-size: 1.5rem;
         }
+
+        .inline-profile-pic {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 15px;
+            vertical-align: middle;
+            border: 2px solid var(--neon-blue);
+        }
         
         .story-card p {
             color: #e1e1e1;
@@ -849,6 +858,10 @@
         </video>
         <div class="container">
             <div class="story-content">
+                <h2 style="text-align: center; font-size: 2.2rem; margin-bottom: 40px; font-family: 'Orbitron', sans-serif; color: var(--neon-yellow);">
+                    <img src="kariza.jpg" alt="Kariza" class="inline-profile-pic">
+                    Kariza Sanmiong
+                </h2>
                 <div class="story-card">
                     <div class="corner-decoration corner-top-left"></div>
                     <div class="corner-decoration corner-top-right"></div>
@@ -948,7 +961,7 @@
                     <div class="corner-decoration corner-top-right"></div>
                     <div class="corner-decoration corner-bottom-left"></div>
                     <div class="corner-decoration corner-bottom-right"></div>
-                    <h2><i class="fas fa-user-friends"></i>Susana Sis</h2>
+                    <h2><img src="susana.jpg" alt="Susana" class="inline-profile-pic">Susana Sis</h2>
                     <p>Susana Sis tiene 86 años y nacio en Mexico.</p>
                     <p>Lo que se sabe:</p>
                     <p>Susana estuvo casada Con Vincent, su esposo fallecido hace 16 años. Estuvieron casados 51 años. Vincent la engaño con tres mujeres, los hijos que tuvo aun son desconocidos. Estuvo en vietnam pero no es veterana de la guerra. (?).  estuvo en New York viviendo, se desconoce cuanto y desde cuando. El amigo de Vincent, Rupert, fue el que le dijo a susana de la infidelidad de su esposo.</p>
@@ -1005,7 +1018,7 @@
         </div>
     </section>
     
-        <audio id="susanaAudio" src="Audio/gata.mp3"></audio>
+        <audio id="susanaAudio" src="gata.mp3"></audio>
     <div id="imageModal" class="modal">
       <span class="close-modal">&times;</span>
       <img class="modal-content" id="modalImage">
