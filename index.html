@@ -1019,6 +1019,7 @@
     </section>
     
         <audio id="susanaAudio" src="Audio/gata.mp3"></audio>
+    <audio id="clickSound" src="efecto.mp3"></audio>
     <div id="imageModal" class="modal">
       <span class="close-modal">&times;</span>
       <img class="modal-content" id="modalImage">
@@ -1087,12 +1088,18 @@
             });
             
             // Navegación entre secciones
+            const clickSound = document.getElementById('clickSound');
             const navLinksList = document.querySelectorAll('.nav-links a');
             const sections = document.querySelectorAll('.story-section');
             
             navLinksList.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
+
+                    if (clickSound) {
+                        clickSound.currentTime = 0;
+                        clickSound.play();
+                    }
                     
                     // Obtener la sección a mostrar
                     const sectionId = this.getAttribute('data-section');
