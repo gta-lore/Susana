@@ -576,6 +576,7 @@
                 transition: right 0.3s ease-in-out;
                 box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
                 z-index: 999;
+                overflow: hidden; /* Added to contain the video */
             }
             
             .nav-links.active {
@@ -779,6 +780,22 @@
             border-color: var(--neon-purple);
         }
 
+        #menu-background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Send it behind the content */
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .nav-links.active #menu-background-image {
+            opacity: 0.5; /* Visible when menu is active */
+        }
+
         .download-btn i {
             margin-right: 8px;
         }
@@ -822,6 +839,7 @@
                     <span></span>
                     <span></span>
                 </button>
+                <img src="fondomenu.jpg" alt="Fondo del Menú" id="menu-background-image">
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#" class="active" data-section="inicio"><i class="fas fa-home"></i>Inicio</a></li>
                     <li><a href="#" data-section="kariza"><i class="fas fa-user"></i>Kariza</a></li>
