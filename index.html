@@ -633,6 +633,152 @@
                 margin-right: 10px;
             }
         }
+
+        /* Gallery Section */
+        .gallery-container {
+            width: 100%;
+        }
+
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--neon-blue);
+            padding-bottom: 15px;
+        }
+
+        .gallery-nav-btn {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            border: 1px solid var(--neon-purple);
+            color: var(--text-color);
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .gallery-nav-btn:hover,
+        .gallery-nav-btn.active {
+            background: var(--neon-purple);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--neon-purple);
+        }
+
+        .gallery-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .gallery-grid.active {
+            display: grid;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover {
+            border-color: var(--neon-pink);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Modal / Lightbox */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            padding-top: 60px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .download-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--neon-purple);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: white;
+            color: var(--neon-purple);
+            border-color: var(--neon-purple);
+        }
+
+        .download-btn i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 700px){
+            .modal-content {
+                width: 95%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -652,6 +798,7 @@
                     <li><a href="#" data-section="kariza"><i class="fas fa-user"></i>Kariza</a></li>
                     <li><a href="#" data-section="susana"><i class="fas fa-user-friends"></i>Susana</a></li>
                     <li><a href="#" data-section="matilda"><i class="fas fa-star"></i>Matilda</a></li>
+                    <li><a href="#" data-section="galeria"><i class="fas fa-images"></i>Galería</a></li>
                 </ul>
             </nav>
         </div>
@@ -713,7 +860,7 @@
                     <div class="corner-decoration corner-bottom-right"></div>
                     <h2><i class="fas fa-feather-alt"></i>Independencia</h2>
                     <p>Tuvo una pelea eterna con ellos lo que la obligó a la edad de 23 años salir de Corea para iniciar su vida de independencia retando a su padre que le quitó todo el apoyo.</p>
-                    <p>Quiso tener una vida lejos de su familia ya que sabía que ellos hacían cosas malas y trató de superarse siendo buena persona y dedicándose a cumplir su sueño: Ser Artista plástica, pero se quedó en sueño ya que a sus 23 años fue parte de la LSPD llegando a tener el puesto de <span class="highlight">"Sub inspector Jefe"</span> por un acuerdo personal con el Jefe a cargo y teniendo la oportunidad de infiltrarse para investigar la droga.</p>
+                    <p>Quiso tener una vida lejos de su familia ya que sabía que ellos hacían cosas malas y trató de superarse siendo buena persona y dedicándose a cumplir su sueño: Ser Artista plástica, pero se quedó en sueño ya que a sus 23 años fue parte de la LSPD llegando a tener el puesto de <span class="highlight">'''Sub inspector Jefe'''</span> por un acuerdo personal con el Jefe a cargo y teniendo la oportunidad de infiltrarse para investigar la droga.</p>
                 </div>
                 
                 <div class="story-card">
@@ -808,7 +955,45 @@
             </div>
         </div>
     </section>
+
+    <section id="galeria" class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <div class="gallery-container">
+                    <div class="gallery-nav">
+                        <button class="gallery-nav-btn active" data-gallery="kariza-gallery">Kariza</button>
+                        <button class="gallery-nav-btn" data-gallery="susana-gallery">Susana</button>
+                        <button class="gallery-nav-btn" data-gallery="matilda-gallery">Matilda</button>
+                    </div>
+                    <div id="kariza-gallery" class="gallery-grid active">
+                        <div class="gallery-item"><img src="https://i.postimg.cc/rppFXMfC/zfp-SSNwrvzuc-png.webp" alt="Galería Kariza 1"></div>
+                        <div class="gallery-item"><img src="https://i.postimg.cc/KzkGjQS1/Untitled-Project.jpg" alt="Galería Kariza 2"></div>
+                        <div class="gallery-item"><img src="https://i.postimg.cc/cJ51d2jq/c-Yl-TOMJEAlan-png.webp" alt="Galería Kariza 3"></div>
+                    </div>
+                    <div id="susana-gallery" class="gallery-grid">
+                        <div class="gallery-item"><img src="https://i.postimg.cc/PrhGwf5k/Uf-RGv-Zp91iz4.webp" alt="Galería Susana 1"></div>
+                        <div class="gallery-item"><img src="https://i.postimg.cc/kg1LzxFn/ry-Ltrbfj4-Qy-I.webp" alt="Galería Susana 2"></div>
+                        <div class="gallery-item"><img src="https://i.postimg.cc/8zPqZyvK/LUD1-BO9-DYVl-R.webp" alt="Galería Susana 3"></div>
+                        <div class="gallery-item"><img src="https://i.postimg.cc/J7jV0Hmq/HQ8drla-Xevf-S.webp" alt="Galería Susana 4"></div>
+                        <div class="gallery-item"><img src="https://i.postimg.cc/sXq24q9P/rkrz5m.jpg" alt="Galería Susana 5"></div>
+                    </div>
+                    <div id="matilda-gallery" class="gallery-grid">
+                        <div class="gallery-item"><img src="https://i.imgur.com/mJtVvWc.jpeg" alt="Galería Matilda 1"></div>
+                        <div class="gallery-item"><img src="https://i.imgur.com/d2zK1gQ.jpeg" alt="Galería Matilda 2"></div>
+                        <div class="gallery-item"><img src="https://i.imgur.com/u8a7a7A.jpeg" alt="Galería Matilda 3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     
+    <!-- The Modal/Lightbox -->
+    <div id="imageModal" class="modal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="modalImage">
+      <a id="downloadBtn" class="download-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-download"></i> Descargar</a>
+    </div>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -820,7 +1005,7 @@
                     <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
                 
-                <p class="copyright"><i class="far fa-copyright"></i> 2023 Historia de Kariza Sanmiong. Todos los derechos reservados.</p>
+                <p class="copyright"><i class="far fa-copyright"></i> 2025 Orión Network. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
@@ -907,6 +1092,55 @@
                     });
                 });
             });
+
+            // Gallery navigation
+            const galleryNavButtons = document.querySelectorAll('.gallery-nav-btn');
+            const galleryGrids = document.querySelectorAll('.gallery-grid');
+
+            galleryNavButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const galleryId = this.getAttribute('data-gallery');
+
+                    // Update buttons state
+                    galleryNavButtons.forEach(button => button.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update gallery grids visibility
+                    galleryGrids.forEach(grid => {
+                        if (grid.id === galleryId) {
+                            grid.classList.add('active');
+                        } else {
+                            grid.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Modal/Lightbox functionality
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const downloadBtn = document.getElementById("downloadBtn");
+            const galleryItems = document.querySelectorAll(".gallery-item");
+            
+            galleryItems.forEach(item => {
+                item.onclick = function(){
+                    const img = this.querySelector('img');
+                    modal.style.display = "block";
+                    modalImg.src = img.src;
+                    downloadBtn.href = img.src;
+                }
+            });
+
+            const closeModalSpan = document.querySelector(".close-modal");
+            closeModalSpan.onclick = function() { 
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
         });
         
         // Función para cerrar el menú al hacer clic en un enlace (en dispositivos móviles)
