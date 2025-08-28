@@ -774,6 +774,26 @@
             margin-right: 8px;
         }
 
+        .story-play-btn {
+            background: var(--neon-purple);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .story-play-btn:hover {
+            box-shadow: 0 0 15px var(--neon-purple);
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 700px){
             .modal-content {
                 width: 95%;
@@ -811,13 +831,10 @@
         <div class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <!-- Se ha eliminado el título y subtítulos originales -->
                     
-                    <!-- Nueva presentación e imagen -->
                     <div class="welcome-container">
                         <p class="welcome-text">Bienvenido/a. Aquí encontrarás las historias de los personajes de rol de Naominavarro.</p>
                         <div class="profile-image">
-                            <!-- Reemplaza esta URL con tu imagen de Imgur -->
                             <img src="https://i.imgur.com/zYIeYyw.jpeg" alt="Personaje de Naominavarro">
                         </div>
                     </div>
@@ -938,7 +955,8 @@
                     <p>Susana tuvo tres hijos, se ha mencionado solo a dos (?) y se sabe que a uno de ellos lo esta buscando Kariza.</p>
                     <p>Tuvo a nieto llamado Enzo que le decia menso el cual tambien murio se desconoce el motivo (?).</p>
                     <p>Adopta a Kariza Sanmiong a la edad de 24 años (Salchicha Salmon) convirtiendose en su hija. Gracias a ella, tiene nietos que la esperan en Corea.</p>
-                    <p>La busqueda de su hijo sigue en pie. (editado 8 abr. 12:16 a. m.)</p>
+                                        <p>La busqueda de su hijo sigue en pie. (editado 8 abr. 12:16 a. m.)</p>
+                    <button id="playSusanaAudioBtn" class="story-play-btn"><i class="fas fa-play"></i> Play</button>
                 </div>
             </div>
         </div>
@@ -987,7 +1005,7 @@
         </div>
     </section>
     
-    <!-- The Modal/Lightbox -->
+        <audio id="susanaAudio" src="gata.mp3"></audio>
     <div id="imageModal" class="modal">
       <span class="close-modal">&times;</span>
       <img class="modal-content" id="modalImage">
@@ -997,11 +1015,10 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- Se ha eliminado el texto específico del footer -->
                 <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="https://www.twitch.tv/naominnavarro?sr=a"><i class="fab fa-twitch"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                        <a href="https://www.instagram.com/naomi_navarro?igsh=MW56aGZ0bnQ0cHN3eg=="><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
                 
@@ -1140,6 +1157,33 @@
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
+            }
+
+                        // --- Audio Button Logic ---
+            const playSusanaBtn = document.getElementById('playSusanaAudioBtn');
+            const susanaAudio = document.getElementById('susanaAudio');
+
+            if (playSusanaBtn && susanaAudio) {
+                const togglePlay = function() {
+                    if (susanaAudio.paused) {
+                        susanaAudio.play().then(() => {
+                            playSusanaBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                        }).catch(error => {
+                            console.error("Audio playback failed:", error);
+                            // Optionally reset the button if play fails
+                            playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                        });
+                    } else {
+                        susanaAudio.pause();
+                        playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                    }
+                };
+
+                playSusanaBtn.addEventListener('click', togglePlay);
+
+                susanaAudio.onended = function() {
+                    playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Play';
+                };
             }
         });
         
