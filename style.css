@@ -1,10 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
+/* --- Keyframe Animations --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 :root {
     --text-color: #ffffff;
-    --dark-overlay: rgba(0, 0, 0, 0.6); /* A bit darker for better contrast */
-    --highlight-color: #ffaf40; /* A softer, elegant gold */
+    --dark-overlay: rgba(0, 0, 0, 0.6);
+    --highlight-color: #ffaf40;
     --primary-font: 'Poppins', sans-serif;
 }
 
@@ -56,7 +73,7 @@ html, body {
     object-fit: cover;
     transform: translate(-50%, -50%);
     z-index: 1;
-    filter: brightness(0.6); /* Darker video for more text pop */
+    filter: brightness(0.6);
 }
 
 .content-overlay {
@@ -65,11 +82,38 @@ html, body {
     max-width: 900px;
     background: var(--dark-overlay);
     padding: 40px;
-    border-radius: 15px; /* Softer radius */
-    backdrop-filter: blur(8px); /* More blur */
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
     max-height: calc(100vh - 120px);
     overflow-y: auto;
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Inicio Section Styling --- */
+#inicio .content-overlay {
+    text-align: center;
+}
+
+#inicio .content-overlay h2 {
+    animation: fadeIn 0.5s 0.2s ease-out forwards;
+    opacity: 0;
+}
+
+#inicio .content-overlay img {
+    animation: fadeInUp 0.5s 0.4s ease-out forwards;
+    opacity: 0;
+    box-shadow: 0 0 25px rgba(255, 175, 64, 0.5); /* Softer glow */
+}
+
+.welcome-text {
+    font-size: 1.4rem;
+    font-weight: 400; /* Not too bold */
+    animation: fadeInUp 0.5s 0.6s ease-out forwards;
+    opacity: 0;
+    color: #f0f0f0;
+    max-width: 500px; /* Constrain width */
+    margin: 20px auto 0 auto !important; /* Override default p margin */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
 }
 
 .inline-profile-pic {
@@ -82,20 +126,20 @@ html, body {
 }
 
 .content-overlay h2 {
-    font-size: 2.8rem; /* Slightly adjusted size */
-    font-weight: 700; /* Bold but not extra-bold */
+    font-size: 2.8rem;
+    font-weight: 700;
     margin-bottom: 25px;
     color: var(--highlight-color);
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Softer, modern shadow */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .content-overlay p {
-    font-size: 1.1rem; /* Comfortable reading size */
-    line-height: 1.8; /* More space between lines */
-    max-width: 700px; /* Wider text block */
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 700px;
     margin: 15px auto;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    text-align: left; /* Left-align for readability */
+    text-align: left;
 }
 
 .story-text {
@@ -116,7 +160,7 @@ html, body {
     border-bottom: 2px solid var(--highlight-color);
     padding-bottom: 8px;
     text-align: left;
-    text-shadow: none; /* Cleaner look */
+    text-shadow: none;
 }
 
 /* --- Navegación Minimalista --- */
@@ -205,7 +249,7 @@ html, body {
     padding: 12px 25px;
     margin-top: 20px;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif; /* Use Poppins here too */
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 1rem;
     border-radius: 5px;
@@ -256,7 +300,7 @@ html, body {
         transform: none;
         justify-content: center;
         padding: 15px;
-        background: rgba(0, 0, 0, 0.8); /* Darker on mobile */
+        background: rgba(0, 0, 0, 0.8);
         width: 100%;
         z-index: 1001;
     }
