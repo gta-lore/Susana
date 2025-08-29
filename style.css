@@ -21,6 +21,9 @@ html, body {
     background-color: #000;
     color: var(--text-color);
     position: relative; /* Añadido para que .story-section se posicione correctamente */
+    text-rendering: optimizeLegibility; /* Improves text rendering */
+    -webkit-font-smoothing: antialiased; /* For better rendering on WebKit */
+    -moz-osx-font-smoothing: grayscale; /* For better rendering on Firefox */
 }
 
 .story-section {
@@ -82,7 +85,8 @@ html, body {
     text-transform: uppercase;
     margin-bottom: 20px;
     color: var(--highlight-color);
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8), 6px 6px 0px var(--highlight-color); /* Adds a blocky shadow */
+    letter-spacing: 2px; /* Spacing for pixelated look */
 }
 
 .content-overlay p {
@@ -90,8 +94,9 @@ html, body {
     line-height: 1.6;
     max-width: 600px;
     margin: 10px auto;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
     text-align: left;
+    letter-spacing: 0.5px; /* Subtle spacing */
 }
 
 .content-overlay .story-title {
@@ -104,6 +109,8 @@ html, body {
     border-bottom: 1px solid var(--highlight-color);
     padding-bottom: 5px;
     text-align: left;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6); /* Shadow for titles */
+    letter-spacing: 1px;
 }
 
 /* --- Navegación Minimalista --- */
