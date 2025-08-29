@@ -14,35 +14,32 @@
 }
 
 html, body {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden; /* Evita el scroll tradicional */
     font-family: 'Montserrat', sans-serif;
     background-color: #000;
     color: var(--text-color);
+    position: relative; /* Añadido para que .story-section se posicione correctamente */
 }
 
 .story-section {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
+    width: 100vw;
+    height: 100vh;
+    display: none; /* Cambiado de opacity/visibility */
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 5vw;
     text-align: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: all 0.8s ease; /* Transición para la activación */
     z-index: 2;
 }
 
 .story-section.active {
-    opacity: 1;
-    visibility: visible;
+    display: flex; /* Cambiado de opacity/visibility */
     z-index: 3;
 }
 
@@ -61,9 +58,9 @@ html, body {
 .content-overlay {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 900px; /* Ancho máximo para escritorio */
     background: var(--dark-overlay);
-    padding: 40px;
+    padding: 40px; /* Padding para escritorio */
     border-radius: 10px;
     backdrop-filter: blur(5px);
 }
@@ -202,14 +199,13 @@ html, body {
 /* --- Responsive --- */
 @media (max-width: 768px) {
     .story-section {
-        padding: 10vw 5vw; /* Ajusta el padding para móviles */
+        padding: 10vh 5vw; /* Ajusta el padding para móviles (vertical y horizontal) */
         justify-content: flex-start; /* Alinea el contenido al inicio */
-        padding-top: 10vh; /* Espacio para la parte superior */
     }
 
     .content-overlay {
-        width: 95vw; /* Ocupa casi todo el ancho de la pantalla */
-        padding: 20px;
+        width: 90vw; /* Ocupa el 90% del ancho de la pantalla */
+        padding: 20px; /* Padding para móvil */
         margin-top: 0; /* Asegura que no haya margen superior extra */
     }
 
