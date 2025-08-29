@@ -1,50 +1,29 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kariza Sanmiong | Historias Independientes</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Historias | Susana</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo"><i class="fas fa-crown"></i>HISTORIAS</div>
-                <button class="menu-toggle" id="menuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                
-                <ul class="nav-links" id="navLinks">
-                    <img src="fondomenu.jpg" alt="Fondo del Menú" id="menu-background-image">
-                    <li><a href="#" class="active" data-section="inicio"><i class="fas fa-home"></i>Inicio</a></li>
-                    <li><a href="#" data-section="kariza"><i class="fas fa-user"></i>Kariza</a></li>
-                    <li><a href="#" data-section="susana"><i class="fas fa-user-friends"></i>Susana</a></li>
-                    <li><a href="#" data-section="matilda"><i class="fas fa-star"></i>Matilda</a></li>
-                    <li><a href="#" data-section="galeria"><i class="fas fa-images"></i>Galería</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
+
+    <nav id="main-nav">
+        <div class="nav-dot active" data-section="inicio"></div>
+        <div class="nav-dot" data-section="kariza"></div>
+        <div class="nav-dot" data-section="susana"></div>
+        <div class="nav-dot" data-section="matilda"></div>
+        <div class="nav-dot" data-section="galeria"></div>
+    </nav>
+
     <section id="inicio" class="story-section active">
         <video autoplay loop muted class="video-background">
             <source src="videos/inicio.mp4" type="video/mp4">
         </video>
-        <div class="container">
-            <div class="welcome-container">
-                <p class="welcome-text">Bienvenido/a. Aquí encontrarás las historias de los personajes de rol de Naominavarro.</p>
-                <div class="profile-image">
-                    <img src="https://i.imgur.com/zYIeYyw.jpeg" alt="Personaje de Naominavarro">
-                </div>
-            </div>
+        <div class="content-overlay">
+            <img src="https://i.imgur.com/zYIeYyw.jpeg" alt="Personaje de Naominavarro" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid var(--highlight-color); margin-bottom: 20px;">
+            <p style="font-size: 1.5rem; font-weight: 700;">Bienvenido/a. Aquí encontrarás las historias de los personajes de rol de Naominavarro.</p>
         </div>
     </section>
     
@@ -52,363 +31,104 @@
         <video autoplay loop muted class="video-background">
             <source src="videos/kariza.mp4" type="video/mp4">
         </video>
-        <div class="container">
-            <div class="story-content">
-                <h2 style="text-align: center; font-size: 2.2rem; margin-bottom: 40px; font-family: 'Orbitron', sans-serif; color: var(--neon-yellow);">
-                    <img src="kariza.jpg" alt="Kariza" class="inline-profile-pic">
-                    Kariza Sanmiong
-                </h2>
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-family"></i>Origen y Familia</h2>
-                    <p><span class="highlight">Kariza Sanmiong</span> (27 años actualmente). Mexicana-Coreana.</p>
-                    <p>Su padre coreano <span class="highlight">Min Sanmiong</span> y madre mexicana <span class="highlight">Rebecca Mun</span>. Tuvieron dos hijos, Kariza siendo la mayor y su hermano pequeño <span class="highlight">Min-So de 4 años</span>.</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-child"></i>Infancia y Adolescencia</h2>
-                    <p>Kariza tuvo una niñez rodeada de lujos, fue instruida en tiro y desde pequeña criada para manejar situaciones difíciles.</p>
-                    <p>Desde pequeña fue observadora e inteligente aunque era muy distraída.</p>
-                    <p>Durante su adolescencia sus deseos de vida fueron cambiando creándole un descontento a sus padres ya que ellos tenían planes para ella.</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-feather-alt"></i>Independencia</h2>
-                    <p>Tuvo una pelea eterna con ellos lo que la obligó a la edad de 23 años salir de Corea para iniciar su vida de independencia retando a su padre que le quitó todo el apoyo.</p>
-                    <p>Quiso tener una vida lejos de su familia ya que sabía que ellos hacían cosas malas y trató de superarse siendo buena persona y dedicándose a cumplir su sueño: Ser Artista plástica, pero se quedó en sueño ya que a sus 23 años fue parte de la LSPD llegando a tener el puesto de <span class="highlight">'''Sub inspector Jefe'''</span> por un acuerdo personal con el Jefe a cargo y teniendo la oportunidad de infiltrarse para investigar la droga.</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-heart"></i>Policía y Amor</h2>
-                    <p>En la policía conoció a un chico (nombre desconocido) del cual se enamoró perdidamente de él ya que le recordaba a su ex novio desaparecido. (paradero de el chico desconocido)</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-exclamation-triangle"></i>Secuestro y Traición</h2>
-                    <p>Kariza tuvo un secuestro junto con su mejor amiga (Rosie) que la marcó, casi matándola. No le gustaba que la tocaran y queriendo saber la verdad del secuestro, la creyeron loca y comenzó a darse cuenta de que todos le mentían, incluso su pareja de quien sintió traición por ocultar lo que tanto ella buscaba.</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-tint"></i>Sufrimiento y Pérdida</h2>
-                    <p>Kariza trataba de ser buena persona pero con todo lo que sufrió, mentiras, maltrato de su pareja, rupturas amistosas, Vivió muchas muertes, la de Su mejor amiga, su mejor amigo, su antiguo amor de vida, acusaciones de asesinato para ella y su esposo y un embarazo que casi la lleva a la muerte.</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-exchange-alt"></i>Transformación</h2>
-                    <p>Todas estas situaciones terminaron arrebatándole la felicidad que tenía y poco a poco fue cayendo en un agujero obligándose a quitarse la máscara de buena y arrebatándole la vida a una persona.</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-hands-helping"></i>Susana Sis</h2>
-                    <p>Conoció a Susana Sis, una persona que a su edad, le ayudó a no estar sola en su momento, conoció sus secretos, debilidades y aun así la ayudó, logrando ganarse el corazón de Kariza y ayudándose entre las dos a salir adelante.</p>
-                    <p>(esto fue lo último que se supo de ella ic)</p>
-                </div>
-                
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><i class="fas fa-question"></i>Misterio Actual</h2>
-                    <p>Se desconoce qué pasó después del coma de Kariza.</p>
-                    <p>Lo que se sabe: Que actualmente vive en Corea del Sur, tiene tres hijos y se desconoce a qué se dedica con exactitud.</p>
-                    <p>(no se sabe qué pasó con su familia, con ella, con su esposo, ni por qué se salió de la LSPD)</p>
-                </div>
-            </div>
+        <div class="content-overlay">
+            <h2>Kariza Sanmiong</h2>
+            <p>
+                Origen mexicano-coreano, hija de Min Sanmiong y Rebecca Mun. Su infancia fue de lujos pero estricta, instruida en tiro. En su juventud, sus deseos chocaron con los planes de sus padres, llevándola a buscar su independencia a los 23 años. Se unió a la LSPD como Sub-inspectora Jefe para investigar una red de drogas, pero su vida se complicó por un amor, un secuestro traumático y una red de mentiras que la transformaron, llevándola a un camino oscuro donde conoció a Susana Sis, su ancla en la tormenta.
+            </p>
         </div>
     </section>
     
     <section id="susana" class="story-section">
-        <div class="container">
-            <div class="story-content">
-                <div class="story-card">
-                    
-                    
-                    
-                    
-                    <h2><img src="susana.jpg" alt="Susana" class="inline-profile-pic">Susana Sis</h2>
-                    <p>Susana Sis tiene 86 años y nacio en Mexico.</p>
-                    <p>Lo que se sabe:</p>
-                    <p>Susana estuvo casada Con Vincent, su esposo fallecido hace 16 años. Estuvieron casados 51 años. Vincent la engaño con tres mujeres, los hijos que tuvo aun son desconocidos. Estuvo en vietnam pero no es veterana de la guerra. (?).  estuvo en New York viviendo, se desconoce cuanto y desde cuando. El amigo de Vincent, Rupert, fue el que le dijo a susana de la infidelidad de su esposo.</p>
-                    <p>Susana tuvo tres hijos, se ha mencionado solo a dos (?) y se sabe que a uno de ellos lo esta buscando Kariza.</p>
-                    <p>Tuvo a nieto llamado Enzo que le decia menso el cual tambien murio se desconoce el motivo (?).</p>
-                    <p>Adopta a Kariza Sanmiong a la edad de 24 años (Salchicha Salmon) convirtiendose en su hija. Gracias a ella, tiene nietos que la esperan en Corea.</p>
-                                        <p>La busqueda de su hijo sigue en pie. (editado 8 abr. 12:16 a. m.)</p>
-                    <button id="playSusanaAudioBtn" class="story-play-btn"><i class="fas fa-play"></i> Play</button>
-                </div>
-            </div>
+        <div class="content-overlay">
+            <h2>Susana Sis</h2>
+            <p>
+                A sus 86 años, Susana es una matriarca mexicana marcada por la vida. Casada por 51 años con Vincent, un hombre infiel, y madre de tres hijos, uno de ellos buscado por Kariza. La vida de Susana es un tapiz de secretos, pérdidas y una fortaleza inquebrantable. Adoptó a Kariza como a su propia hija, encontrando en ella un nuevo propósito y la promesa de nietos en Corea. 
+            </p>
+            <button id="playSusanaAudioBtn" class="story-play-btn"><i class="fas fa-play"></i> Escuchar Audio</button>
         </div>
     </section>
     
     <section id="matilda" class="story-section">
-        <div class="container">
-            <div class="story-content">
-                <div class="empty-section">
-                    <h2><i class="fas fa-star"></i>Matilda</h2>
-                    <p><i class="fas fa-clock" style="font-size: 3rem; margin-bottom: 20px;"></i></p>
-                    <p>Contenido pendiente. Próximamente...</p>
-                </div>
-            </div>
+        <div class="content-overlay">
+            <h2>Matilda</h2>
+            <p>Próximamente...</p>
         </div>
     </section>
 
     <section id="galeria" class="story-section">
-        <div class="container">
-            <div class="story-content">
-                <div class="gallery-container">
-                    <div class="gallery-nav">
-                        <button class="gallery-nav-btn active" data-gallery="kariza-gallery">Kariza</button>
-                        <button class="gallery-nav-btn" data-gallery="susana-gallery">Susana</button>
-                        <button class="gallery-nav-btn" data-gallery="matilda-gallery">Matilda</button>
-                    </div>
-                    <div id="kariza-gallery" class="gallery-grid active">
-                        <div class="gallery-item"><img src="https://i.postimg.cc/rppFXMfC/zfp-SSNwrvzuc-png.webp" alt="Galería Kariza 1"></div>
-                        <div class="gallery-item"><img src="https://i.postimg.cc/KzkGjQS1/Untitled-Project.jpg" alt="Galería Kariza 2"></div>
-                        <div class="gallery-item"><img src="https://i.postimg.cc/cJ51d2jq/c-Yl-TOMJEAlan-png.webp" alt="Galería Kariza 3"></div>
-                    </div>
-                    <div id="susana-gallery" class="gallery-grid">
-                        <div class="gallery-item"><img src="https://i.postimg.cc/PrhGwf5k/Uf-RGv-Zp91iz4.webp" alt="Galería Susana 1"></div>
-                        <div class="gallery-item"><img src="https://i.postimg.cc/kg1LzxFn/ry-Ltrbfj4-Qy-I.webp" alt="Galería Susana 2"></div>
-                        <div class="gallery-item"><img src="https://i.postimg.cc/8zPqZyvK/LUD1-BO9-DYVl-R.webp" alt="Galería Susana 3"></div>
-                        <div class="gallery-item"><img src="https://i.postimg.cc/J7jV0Hmq/HQ8drla-Xevf-S.webp" alt="Galería Susana 4"></div>
-                        <div class="gallery-item"><img src="https://i.postimg.cc/sXq24q9P/rkrz5m.jpg" alt="Galería Susana 5"></div>
-                    </div>
-                    <div id="matilda-gallery" class="gallery-grid">
-                        <div class="gallery-item"><img src="https://i.imgur.com/mJtVvWc.jpeg" alt="Galería Matilda 1"></div>
-                        <div class="gallery-item"><img src="https://i.imgur.com/d2zK1gQ.jpeg" alt="Galería Matilda 2"></div>
-                        <div class="gallery-item"><img src="https://i.imgur.com/u8a7a7A.jpeg" alt="Galería Matilda 3"></div>
-                    </div>
-                </div>
+        <div class="content-overlay">
+            <h2>Galería</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://i.postimg.cc/rppFXMfC/zfp-SSNwrvzuc-png.webp" alt="Galería Kariza 1"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/KzkGjQS1/Untitled-Project.jpg" alt="Galería Kariza 2"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/cJ51d2jq/c-Yl-TOMJEAlan-png.webp" alt="Galería Kariza 3"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/PrhGwf5k/Uf-RGv-Zp91iz4.webp" alt="Galería Susana 1"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/kg1LzxFn/ry-Ltrbfj4-Qy-I.webp" alt="Galería Susana 2"></div>
+                <div class="gallery-item"><img src="https://i.postimg.cc/sXq24q9P/rkrz5m.jpg" alt="Galería Susana 5"></div>
             </div>
         </div>
     </section>
     
-        <audio id="susanaAudio" src="Audio/gata.mp3"></audio>
+    <audio id="susanaAudio" src="Audio/gata.mp3"></audio>
     <audio id="clickSound" src="efecto.mp3"></audio>
-    <div id="imageModal" class="modal">
-      <span class="close-modal">&times;</span>
-      <img class="modal-content" id="modalImage">
-      <a id="downloadBtn" class="download-btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-download"></i> Descargar</a>
-    </div>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="social-icons">
-                    <a href="https://www.twitch.tv/naominnavarro?sr=a"><i class="fab fa-twitch"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.instagram.com/naomi_navarro?igsh=MW56aGZ0bnQ0cHN3eg=="><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <p class="copyright"><i class="far fa-copyright"></i> 2025 Orión Network. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-    
     <script>
-        // Crear efecto de partículas
-        document.addEventListener('DOMContentLoaded', function() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 60;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Posición aleatoria
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                particle.style.left = `${posX}vw`;
-                particle.style.top = `${posY}vh`;
-                
-                // Tamaño aleatorio
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Color aleatorio (entre azul neón y rosa neón)
-                const colors = ['#00c6ff', '#ff00aa', '#ffcc00', '#00ff99'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.backgroundColor = randomColor;
-                
-                // Duración aleatoria de animación
-                const duration = Math.random() * 25 + 15;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Retraso aleatorio
-                const delay = Math.random() * 5;
-                particle.style.animationDelay = `${delay}s`;
-                
-                particlesContainer.appendChild(particle);
+    document.addEventListener('DOMContentLoaded', function() {
+        const navDots = document.querySelectorAll('.nav-dot');
+        const sections = document.querySelectorAll('.story-section');
+        const clickSound = document.getElementById('clickSound');
+
+        function changeSection(sectionId) {
+            if (clickSound) {
+                clickSound.currentTime = 0;
+                clickSound.play().catch(e => console.log("Error al reproducir sonido de click"));
             }
-            
-            // Menu toggle functionality
-            const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            
-            menuToggle.addEventListener('click', function() {
-                navLinks.classList.toggle('active');
-                menuToggle.classList.toggle('active');
-            });
-            
-            // Navegación entre secciones
-            const clickSound = document.getElementById('clickSound');
-            const navLinksList = document.querySelectorAll('.nav-links a');
-            const sections = document.querySelectorAll('.story-section');
-            
-            navLinksList.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
 
-                    if (clickSound) {
-                        clickSound.currentTime = 0;
-                        clickSound.play();
-                    }
-                    
-                    // Obtener la sección a mostrar
-                    const sectionId = this.getAttribute('data-section');
-                    
-                    // Ocultar todas las secciones
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    
-                    // Mostrar la sección seleccionada
-                    document.getElementById(sectionId).classList.add('active');
-                    
-                    // Actualizar enlace activo
-                    navLinksList.forEach(link => link.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Cerrar menú en móviles
-                    if (window.innerWidth <= 900) {
-                        navLinks.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                    }
-                    
-                    // Scroll to top
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
+            sections.forEach(section => {
+                section.classList.remove('active');
             });
 
-            // Gallery navigation
-            const galleryNavButtons = document.querySelectorAll('.gallery-nav-btn');
-            const galleryGrids = document.querySelectorAll('.gallery-grid');
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
 
-            galleryNavButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const galleryId = this.getAttribute('data-gallery');
-
-                    // Update buttons state
-                    galleryNavButtons.forEach(button => button.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Update gallery grids visibility
-                    galleryGrids.forEach(grid => {
-                        if (grid.id === galleryId) {
-                            grid.classList.add('active');
-                        } else {
-                            grid.classList.remove('active');
-                        }
-                    });
-                });
-            });
-
-            // Modal/Lightbox functionality
-            const modal = document.getElementById("imageModal");
-            const modalImg = document.getElementById("modalImage");
-            const downloadBtn = document.getElementById("downloadBtn");
-            const galleryItems = document.querySelectorAll(".gallery-item");
-            
-            galleryItems.forEach(item => {
-                item.onclick = function(){
-                    const img = this.querySelector('img');
-                    modal.style.display = "block";
-                    modalImg.src = img.src;
-                    downloadBtn.href = img.src;
+            navDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-section') === sectionId) {
+                    dot.classList.add('active');
                 }
             });
-
-            const closeModalSpan = document.querySelector(".close-modal");
-            closeModalSpan.onclick = function() { 
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-
-                        // --- Audio Button Logic ---
-            const playSusanaBtn = document.getElementById('playSusanaAudioBtn');
-            const susanaAudio = document.getElementById('susanaAudio');
-
-            if (playSusanaBtn && susanaAudio) {
-                const togglePlay = function() {
-                    if (susanaAudio.paused) {
-                        susanaAudio.play().then(() => {
-                            playSusanaBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                        }).catch(error => {
-                            console.error("Audio playback failed:", error);
-                            // Optionally reset the button if play fails
-                            playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Play';
-                        });
-                    } else {
-                        susanaAudio.pause();
-                        playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Play';
-                    }
-                };
-
-                playSusanaBtn.addEventListener('click', togglePlay);
-
-                susanaAudio.onended = function() {
-                    playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Play';
-                };
-            }
-        });
-        
-        // Función para cerrar el menú al hacer clic en un enlace (en dispositivos móviles)
-        function closeMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.getElementById('menuToggle');
-            navLinks.classList.remove('active');
-            menuToggle.classList.remove('active');
         }
+
+        navDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-section');
+                changeSection(sectionId);
+            });
+        });
+
+        // Audio Button Logic
+        const playSusanaBtn = document.getElementById('playSusanaAudioBtn');
+        const susanaAudio = document.getElementById('susanaAudio');
+
+        if (playSusanaBtn && susanaAudio) {
+            playSusanaBtn.addEventListener('click', function() {
+                if (susanaAudio.paused) {
+                    susanaAudio.play().then(() => {
+                        this.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+                    }).catch(e => console.error("Error al reproducir audio:", e));
+                } else {
+                    susanaAudio.pause();
+                    this.innerHTML = '<i class="fas fa-play"></i> Escuchar Audio';
+                }
+            });
+            susanaAudio.onended = function() {
+                playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Escuchar Audio';
+            };
+        }
+    });
     </script>
 </body>
 </html>
