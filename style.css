@@ -201,9 +201,16 @@ html, body {
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
+    .story-section {
+        padding: 10vw 5vw; /* Ajusta el padding para móviles */
+        justify-content: flex-start; /* Alinea el contenido al inicio */
+        padding-top: 10vh; /* Espacio para la parte superior */
+    }
+
     .content-overlay {
-        width: 90vw; /* Ocupa el 90% del ancho de la pantalla */
+        width: 95vw; /* Ocupa casi todo el ancho de la pantalla */
         padding: 20px;
+        margin-top: 0; /* Asegura que no haya margen superior extra */
     }
 
     .content-overlay h2 {
@@ -221,7 +228,7 @@ html, body {
 
     #main-nav {
         flex-direction: row;
-        gap: 20px; /* Más espacio entre los puntos */
+        gap: 30px; /* Más espacio entre los puntos */
         top: auto;
         bottom: 0;
         left: 0;
@@ -231,6 +238,7 @@ html, body {
         padding: 15px;
         background: rgba(0, 0, 0, 0.7); /* Fondo para visibilidad */
         width: 100%;
+        z-index: 1001; /* Asegura que esté por encima del contenido */
     }
 
     .nav-label {
