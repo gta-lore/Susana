@@ -63,6 +63,17 @@ html, body {
     padding: 40px; /* Padding para escritorio */
     border-radius: 10px;
     backdrop-filter: blur(5px);
+    max-height: calc(100vh - 150px); /* Altura máxima para permitir scroll */
+    overflow-y: auto; /* Habilita el scroll vertical */
+}
+
+.inline-profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px; /* Espacio a la derecha de la imagen */
+    border: 2px solid var(--highlight-color);
 }
 
 .content-overlay h2 {
