@@ -4,860 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kariza Sanmiong | Historias Independientes</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --neon-blue: #00c6ff;
-            --neon-pink: #ff00aa;
-            --neon-yellow: #ffcc00;
-            --neon-green: #00ff99;
-            --neon-purple: #b967ff;
-            --dark-bg: #0a0a0a;
-            --darker-bg: #050505;
-            --dark-card: #121212;
-            --text-color: #f1f1f1;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
-            font-family: 'Rajdhani', sans-serif;
-            line-height: 1.7;
-            overflow-x: hidden;
-            padding-top: 70px;
-            position: relative;
-        }
-
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            z-index: -2;
-            animation: aurora 60s linear infinite;
-        }
-
-        body::before {
-            background: radial-gradient(circle at 20% 30%, var(--neon-blue), transparent 40%),
-                        radial-gradient(circle at 80% 70%, var(--neon-pink), transparent 40%);
-            filter: blur(100px);
-            opacity: 0.3;
-        }
-
-        body::after {
-            background: radial-gradient(circle at 50% 50%, var(--neon-purple), transparent 35%),
-                        radial-gradient(circle at 10% 80%, var(--neon-green), transparent 40%),
-                        radial-gradient(circle at 90% 20%, var(--neon-yellow), transparent 40%);
-            filter: blur(120px);
-            opacity: 0.4;
-            animation-direction: reverse;
-            animation-duration: 45s;
-        }
-
-        @keyframes aurora {
-            0% { transform: rotate(0deg) translate(0, 0); }
-            50% { transform: rotate(180deg) translate(50px, 50px); }
-            100% { transform: rotate(360deg) translate(0, 0); }
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            background: linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)), url('https://i.imgur.com/OHCC66X.jpeg');
-            background-size: cover;
-            background-position: center;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 28px;
-            color: var(--neon-yellow);
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--neon-pink);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 25px;
-        }
-        
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 5px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-links a i {
-            margin-right: 8px;
-            font-size: 14px;
-        }
-        
-        .nav-links a:hover {
-            color: var(--neon-blue);
-        }
-        
-        .nav-links a.active {
-            color: var(--neon-blue);
-        }
-        
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(to right, var(--neon-blue), var(--neon-pink));
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            padding: 0 20px;
-            margin-top: -70px;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent; /* Removed old gradient */
-            z-index: -1;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-        }
-        
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-yellow));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-            letter-spacing: 2px;
-        }
-        
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            color: #ccc;
-            font-weight: 300;
-        }
-        
-        .hero-subtitle {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-green);
-            font-size: 1.2rem;
-            margin-top: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .hero-subtitle i {
-            margin: 0 10px;
-            color: var(--neon-purple);
-        }
-        
-        /* Nueva presentación y imagen */
-        .welcome-container {
-            margin: 40px 0;
-        }
-        
-        .welcome-text {
-            font-size: 1.8rem;
-            margin-bottom: 40px;
-            color: #e1e1e1;
-            line-height: 1.6;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            text-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
-        }
-        
-        .profile-image {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            margin: 0 auto;
-            overflow: hidden;
-            border: 3px solid transparent;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-yellow));
-            padding: 3px;
-            box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
-            animation: glow 2s infinite alternate;
-        }
-        
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-        
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 15px rgba(0, 198, 255, 0.5);
-            }
-            to {
-                box-shadow: 0 0 25px rgba(255, 0, 170, 0.7), 0 0 35px rgba(255, 204, 0, 0.5);
-            }
-        }
-        
-        /* Story Sections */
-        .story-section {
-            display: none;
-            padding: 100px 0;
-            background-color: transparent; /* Changed from var(--darker-bg) */
-            position: relative;
-            scroll-margin-top: 70px;
-            min-height: 100vh;
-            overflow: hidden; /* Para contener el video */
-        }
-        
-        .story-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .story-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .story-card {
-            margin-bottom: 60px;
-            padding: 30px;
-            background-color: rgba(20, 20, 20, 0.6); /* Glassmorphism background */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-            border-left: 4px solid var(--neon-blue);
-            border-radius: 8px; /* Rounded corners for the card */
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .story-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0, 198, 255, 0.1), rgba(255, 0, 170, 0.1));
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        .story-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--neon-pink);
-            border-left: 4px solid var(--neon-pink);
-        }
-        
-        .story-card:hover::before {
-            opacity: 1;
-        }
-        
-        .story-card h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-yellow);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .story-card h2 i {
-            margin-right: 15px;
-            color: var(--neon-blue);
-            font-size: 1.5rem;
-        }
-
-        .inline-profile-pic {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            margin-right: 15px;
-            vertical-align: middle;
-            border: 2px solid var(--neon-blue);
-        }
-        
-        .story-card p {
-            color: #e1e1e1;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-        
-        .highlight {
-            color: var(--neon-green);
-            font-weight: 600;
-        }
-        
-        .empty-section {
-            text-align: center;
-            padding: 60px 30px;
-            color: #888;
-            font-style: italic;
-        }
-        
-        /* Footer */
-        footer {
-            background: linear-gradient(to top, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0.9) 100%);
-            border-top: 1px solid var(--neon-pink);
-            padding: 50px 0 20px;
-            text-align: center;
-        }
-        
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .footer-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 2rem;
-            color: var(--neon-yellow);
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-        
-        .footer-text {
-            color: #999;
-            font-size: 1rem;
-            margin: 20px 0;
-            line-height: 1.6;
-        }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
-        .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin: 0 10px;
-            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icons a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 0, 170, 0.4);
-        }
-        
-        .copyright {
-            margin-top: 40px;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid #333;
-            padding-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .copyright i {
-            margin: 0 5px;
-            color: var(--neon-pink);
-        }
-        
-        /* Efectos de partículas */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: var(--neon-blue);
-            border-radius: 50%;
-            opacity: 0.7;
-            animation: float 20s infinite linear;
-        }
-
-        .video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.3;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-        
-        /* Decoraciones de esquina */
-        .corner-decoration {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-        }
-        
-        .corner-top-left {
-            top: 10px;
-            left: 10px;
-            border-top: 2px solid var(--neon-blue);
-            border-left: 2px solid var(--neon-blue);
-        }
-        
-        .corner-top-right {
-            top: 10px;
-            right: 10px;
-            border-top: 2px solid var(--neon-pink);
-            border-right: 2px solid var(--neon-pink);
-        }
-        
-        .corner-bottom-left {
-            bottom: 10px;
-            left: 10px;
-            border-bottom: 2px solid var(--neon-green);
-            border-left: 2px solid var(--neon-green);
-        }
-        
-        .corner-bottom-right {
-            bottom: 10px;
-            right: 10px;
-            border-bottom: 2px solid var(--neon-yellow);
-            border-right: 2px solid var(--neon-yellow);
-        }
-        
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 10;
-        }
-        
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: var(--neon-yellow);
-            border-radius: 5px;
-            transition: all 0.3s linear;
-            position: relative;
-            transform-origin: center;
-        }
-        
-        /* Animación de sección */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .story-card {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        /* Responsive */
-        @media (max-width: 900px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .welcome-text {
-                font-size: 1.5rem;
-            }
-            
-            .profile-image {
-                width: 190px;
-                height: 190px;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                height: 100vh;
-                width: 250px;
-                background: var(--darker-bg);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                transition: right 0.3s ease-in-out;
-                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
-                z-index: 9999; /* Increased z-index */
-                overflow: hidden; /* Added to contain the video */
-            }
-            
-            .nav-links.active {
-                right: 0;
-                background: var(--darker-bg); /* Solid background */
-            }
-            
-            .nav-links li {
-                margin: 20px 0;
-            }
-            
-            .menu-toggle {
-                display: flex;
-            }
-            
-            .menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-            
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -6px);
-            }
-            
-            .story-card {
-                padding: 20px;
-            }
-            
-            .story-card h2 {
-                font-size: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .welcome-text {
-                font-size: 1.3rem;
-            }
-            
-            .profile-image {
-                width: 170px;
-                height: 170px;
-            }
-            
-            .story-card {
-                padding: 15px;
-            }
-            
-            .nav-links {
-                width: 100%;
-            }
-            
-            .story-card h2 i {
-                font-size: 1.2rem;
-                margin-right: 10px;
-            }
-        }
-
-        /* Gallery Section */
-        .gallery-container {
-            width: 100%;
-        }
-
-        .gallery-nav {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--neon-blue);
-            padding-bottom: 15px;
-        }
-
-        .gallery-nav-btn {
-            font-family: 'Orbitron', sans-serif;
-            background: transparent;
-            border: 1px solid var(--neon-purple);
-            color: var(--text-color);
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            text-transform: uppercase;
-        }
-
-        .gallery-nav-btn:hover,
-        .gallery-nav-btn.active {
-            background: var(--neon-purple);
-            color: var(--dark-bg);
-            box-shadow: 0 0 15px var(--neon-purple);
-        }
-
-        .gallery-grid {
-            display: none;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .gallery-grid.active {
-            display: grid;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            transition: border-color 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .gallery-item:hover {
-            border-color: var(--neon-pink);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        /* Modal / Lightbox */
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 2000; 
-            padding-top: 60px; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.9);
-        }
-
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            animation-name: zoom;
-            animation-duration: 0.6s;
-        }
-
-        @keyframes zoom {
-            from {transform:scale(0)} 
-            to {transform:scale(1)}
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .close-modal:hover,
-        .close-modal:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .download-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--neon-purple);
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-family: 'Orbitron', sans-serif;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            cursor: pointer;
-        }
-
-        .download-btn:hover {
-            background: white;
-            color: var(--neon-purple);
-            border-color: var(--neon-purple);
-        }
-
-        #menu-background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1; /* Send it behind the content */
-            opacity: 0; /* Hidden by default */
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .nav-links.active #menu-background-image {
-            opacity: 0.5; /* Visible when menu is active */
-        }
-
-        .download-btn i {
-            margin-right: 8px;
-        }
-
-        .story-play-btn {
-            background: var(--neon-purple);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .story-play-btn:hover {
-            box-shadow: 0 0 15px var(--neon-purple);
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 700px){
-            .modal-content {
-                width: 95%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="particles" id="particles"></div>
@@ -888,16 +38,11 @@
         <video autoplay loop muted class="video-background">
             <source src="videos/inicio.mp4" type="video/mp4">
         </video>
-        <div class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    
-                    <div class="welcome-container">
-                        <p class="welcome-text">Bienvenido/a. Aquí encontrarás las historias de los personajes de rol de Naominavarro.</p>
-                        <div class="profile-image">
-                            <img src="https://i.imgur.com/zYIeYyw.jpeg" alt="Personaje de Naominavarro">
-                        </div>
-                    </div>
+        <div class="container">
+            <div class="welcome-container">
+                <p class="welcome-text">Bienvenido/a. Aquí encontrarás las historias de los personajes de rol de Naominavarro.</p>
+                <div class="profile-image">
+                    <img src="https://i.imgur.com/zYIeYyw.jpeg" alt="Personaje de Naominavarro">
                 </div>
             </div>
         </div>
@@ -914,20 +59,20 @@
                     Kariza Sanmiong
                 </h2>
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-family"></i>Origen y Familia</h2>
                     <p><span class="highlight">Kariza Sanmiong</span> (27 años actualmente). Mexicana-Coreana.</p>
                     <p>Su padre coreano <span class="highlight">Min Sanmiong</span> y madre mexicana <span class="highlight">Rebecca Mun</span>. Tuvieron dos hijos, Kariza siendo la mayor y su hermano pequeño <span class="highlight">Min-So de 4 años</span>.</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-child"></i>Infancia y Adolescencia</h2>
                     <p>Kariza tuvo una niñez rodeada de lujos, fue instruida en tiro y desde pequeña criada para manejar situaciones difíciles.</p>
                     <p>Desde pequeña fue observadora e inteligente aunque era muy distraída.</p>
@@ -935,66 +80,66 @@
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-feather-alt"></i>Independencia</h2>
                     <p>Tuvo una pelea eterna con ellos lo que la obligó a la edad de 23 años salir de Corea para iniciar su vida de independencia retando a su padre que le quitó todo el apoyo.</p>
                     <p>Quiso tener una vida lejos de su familia ya que sabía que ellos hacían cosas malas y trató de superarse siendo buena persona y dedicándose a cumplir su sueño: Ser Artista plástica, pero se quedó en sueño ya que a sus 23 años fue parte de la LSPD llegando a tener el puesto de <span class="highlight">'''Sub inspector Jefe'''</span> por un acuerdo personal con el Jefe a cargo y teniendo la oportunidad de infiltrarse para investigar la droga.</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-heart"></i>Policía y Amor</h2>
                     <p>En la policía conoció a un chico (nombre desconocido) del cual se enamoró perdidamente de él ya que le recordaba a su ex novio desaparecido. (paradero de el chico desconocido)</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-exclamation-triangle"></i>Secuestro y Traición</h2>
                     <p>Kariza tuvo un secuestro junto con su mejor amiga (Rosie) que la marcó, casi matándola. No le gustaba que la tocaran y queriendo saber la verdad del secuestro, la creyeron loca y comenzó a darse cuenta de que todos le mentían, incluso su pareja de quien sintió traición por ocultar lo que tanto ella buscaba.</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-tint"></i>Sufrimiento y Pérdida</h2>
                     <p>Kariza trataba de ser buena persona pero con todo lo que sufrió, mentiras, maltrato de su pareja, rupturas amistosas, Vivió muchas muertes, la de Su mejor amiga, su mejor amigo, su antiguo amor de vida, acusaciones de asesinato para ella y su esposo y un embarazo que casi la lleva a la muerte.</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-exchange-alt"></i>Transformación</h2>
                     <p>Todas estas situaciones terminaron arrebatándole la felicidad que tenía y poco a poco fue cayendo en un agujero obligándose a quitarse la máscara de buena y arrebatándole la vida a una persona.</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-hands-helping"></i>Susana Sis</h2>
                     <p>Conoció a Susana Sis, una persona que a su edad, le ayudó a no estar sola en su momento, conoció sus secretos, debilidades y aun así la ayudó, logrando ganarse el corazón de Kariza y ayudándose entre las dos a salir adelante.</p>
                     <p>(esto fue lo último que se supo de ella ic)</p>
                 </div>
                 
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><i class="fas fa-question"></i>Misterio Actual</h2>
                     <p>Se desconoce qué pasó después del coma de Kariza.</p>
                     <p>Lo que se sabe: Que actualmente vive en Corea del Sur, tiene tres hijos y se desconoce a qué se dedica con exactitud.</p>
@@ -1008,10 +153,10 @@
         <div class="container">
             <div class="story-content">
                 <div class="story-card">
-                    <div class="corner-decoration corner-top-left"></div>
-                    <div class="corner-decoration corner-top-right"></div>
-                    <div class="corner-decoration corner-bottom-left"></div>
-                    <div class="corner-decoration corner-bottom-right"></div>
+                    
+                    
+                    
+                    
                     <h2><img src="susana.jpg" alt="Susana" class="inline-profile-pic">Susana Sis</h2>
                     <p>Susana Sis tiene 86 años y nacio en Mexico.</p>
                     <p>Lo que se sabe:</p>
@@ -1081,12 +226,11 @@
         <div class="container">
             <div class="footer-content">
                 <div class="social-icons">
-                                        <a href="https://www.twitch.tv/naominnavarro?sr=a"><i class="fab fa-twitch"></i></a>
+                    <a href="https://www.twitch.tv/naominnavarro?sr=a"><i class="fab fa-twitch"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="https://www.instagram.com/naomi_navarro?igsh=MW56aGZ0bnQ0cHN3eg=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/naomi_navarro?igsh=MW56aGZ0bnQ0cHN3eg=="><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
-                
                 <p class="copyright"><i class="far fa-copyright"></i> 2025 Orión Network. Todos los derechos reservados.</p>
             </div>
         </div>
