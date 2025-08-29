@@ -1,10 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
+/* --- Keyframe Animations --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 :root {
     --text-color: #ffffff;
-    --dark-overlay: rgba(0, 0, 0, 0.5);
-    --highlight-color: #ffcc00; 
+    --dark-overlay: rgba(0, 0, 0, 0.6);
+    --highlight-color: #ffaf40;
+    --primary-font: 'Poppins', sans-serif;
 }
 
 * {
@@ -16,14 +34,14 @@
 html, body {
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* Evita el scroll tradicional */
-    font-family: 'Minecraft', sans-serif;
+    overflow: hidden;
+    font-family: var(--primary-font);
     background-color: #000;
     color: var(--text-color);
-    position: relative; /* Añadido para que .story-section se posicione correctamente */
-    text-rendering: optimizeLegibility; /* Improves text rendering */
-    -webkit-font-smoothing: antialiased; /* For better rendering on WebKit */
-    -moz-osx-font-smoothing: grayscale; /* For better rendering on Firefox */
+    position: relative;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .story-section {
@@ -32,17 +50,17 @@ html, body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    display: none; /* Cambiado de opacity/visibility */
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     text-align: center;
-    transition: all 0.8s ease; /* Transición para la activación */
+    transition: all 0.8s ease;
     z-index: 2;
 }
 
 .story-section.active {
-    display: flex; /* Cambiado de opacity/visibility */
+    display: flex;
     z-index: 3;
 }
 
@@ -55,19 +73,47 @@ html, body {
     object-fit: cover;
     transform: translate(-50%, -50%);
     z-index: 1;
-    filter: brightness(0.7); /* Oscurece un poco el video */
+    filter: brightness(0.6);
 }
 
 .content-overlay {
     position: relative;
     z-index: 2;
-    max-width: 900px; /* Ancho máximo para escritorio */
+    max-width: 900px;
     background: var(--dark-overlay);
-    padding: 40px; /* Padding para escritorio */
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-    max-height: calc(100vh - 150px); /* Altura máxima para permitir scroll */
-    overflow-y: auto; /* Habilita el scroll vertical */
+    padding: 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Inicio Section Styling --- */
+#inicio .content-overlay {
+    text-align: center;
+}
+
+#inicio .content-overlay h2 {
+    animation: fadeIn 0.5s 0.2s ease-out forwards;
+    opacity: 0;
+}
+
+#inicio .content-overlay img {
+    animation: fadeInUp 0.5s 0.4s ease-out forwards;
+    opacity: 0;
+    box-shadow: 0 0 25px rgba(255, 175, 64, 0.5); /* Softer glow */
+}
+
+.welcome-text {
+    font-size: 1.4rem;
+    font-weight: 400; /* Not too bold */
+    animation: fadeInUp 0.5s 0.6s ease-out forwards;
+    opacity: 0;
+    color: #f0f0f0;
+    max-width: 500px; /* Constrain width */
+    margin: 20px auto 0 auto !important; /* Override default p margin */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
 }
 
 .inline-profile-pic {
@@ -75,42 +121,46 @@ html, body {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10px; /* Espacio a la derecha de la imagen */
+    margin-right: 15px;
     border: 2px solid var(--highlight-color);
 }
 
 .content-overlay h2 {
-    font-size: 3rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 25px;
     color: var(--highlight-color);
-    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8), 6px 6px 0px var(--highlight-color); /* Adds a blocky shadow */
-    letter-spacing: 2px; /* Spacing for pixelated look */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .content-overlay p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 10px auto;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 15px auto;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     text-align: left;
-    letter-spacing: 0.5px; /* Subtle spacing */
+}
+
+.story-text {
+    text-align: left;
+}
+
+.story-text .highlight {
+    color: var(--highlight-color);
+    font-weight: 600;
 }
 
 .content-overlay .story-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
     color: var(--text-color);
-    border-bottom: 1px solid var(--highlight-color);
-    padding-bottom: 5px;
+    border-bottom: 2px solid var(--highlight-color);
+    padding-bottom: 8px;
     text-align: left;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6); /* Shadow for titles */
-    letter-spacing: 1px;
+    text-shadow: none;
 }
 
 /* --- Navegación Minimalista --- */
@@ -133,12 +183,12 @@ html, body {
     cursor: pointer;
     transition: all 0.3s ease;
     border: 2px solid transparent;
-    position: relative; /* Necesario para posicionar la etiqueta */
+    position: relative;
 }
 
 .nav-label {
     position: absolute;
-    right: 25px; /* Distancia del punto a la etiqueta */
+    right: 25px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-color);
@@ -146,11 +196,11 @@ html, body {
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: 600;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    white-space: nowrap; /* Evita que el texto se parta */
+    white-space: nowrap;
 }
 
 #main-nav:hover .nav-label {
@@ -199,7 +249,7 @@ html, body {
     padding: 12px 25px;
     margin-top: 20px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 1rem;
     border-radius: 5px;
@@ -217,46 +267,46 @@ html, body {
 /* --- Responsive --- */
 @media (max-width: 768px) {
     .story-section {
-        padding: 10vh 5vw; /* Ajusta el padding para móviles (vertical y horizontal) */
-        justify-content: flex-start; /* Alinea el contenido al inicio */
+        padding: 10vh 5vw;
+        justify-content: flex-start;
     }
 
     .content-overlay {
-        width: 90vw; /* Ocupa el 90% del ancho de la pantalla */
-        padding: 20px; /* Padding para móvil */
-        margin-top: 0; /* Asegura que no haya margen superior extra */
+        width: 90vw;
+        padding: 20px;
+        margin-top: 0;
     }
 
     .content-overlay h2 {
-        font-size: 1.8rem; /* Tamaño de fuente más pequeño para el título principal */
+        font-size: 1.8rem;
     }
 
     .content-overlay p {
-        font-size: 0.9rem; /* Texto de párrafo más pequeño */
-        line-height: 1.5;
+        font-size: 0.9rem;
+        line-height: 1.6;
     }
 
     .content-overlay .story-title {
-        font-size: 1.2rem; /* Tamaño de subtítulos más pequeño */
+        font-size: 1.2rem;
     }
 
     #main-nav {
         flex-direction: row;
-        gap: 30px; /* Más espacio entre los puntos */
+        gap: 30px;
         top: auto;
         bottom: 0;
         left: 0;
         right: 0;
-        transform: none; /* Resetea la transformación */
+        transform: none;
         justify-content: center;
         padding: 15px;
-        background: rgba(0, 0, 0, 0.7); /* Fondo para visibilidad */
+        background: rgba(0, 0, 0, 0.8);
         width: 100%;
-        z-index: 1001; /* Asegura que esté por encima del contenido */
+        z-index: 1001;
     }
 
     .nav-label {
-        display: none; /* Oculta las etiquetas en móvil */
+        display: none;
     }
 
     #galeria .gallery-grid {
