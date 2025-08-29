@@ -118,6 +118,29 @@ html, body {
     cursor: pointer;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    position: relative; /* Necesario para posicionar la etiqueta */
+}
+
+.nav-label {
+    position: absolute;
+    right: 25px; /* Distancia del punto a la etiqueta */
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    background-color: var(--dark-overlay);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    white-space: nowrap; /* Evita que el texto se parta */
+}
+
+#main-nav:hover .nav-label {
+    opacity: 1;
+    visibility: visible;
 }
 
 .nav-dot:hover {
