@@ -17,7 +17,7 @@ html, body {
     height: 100vh;
     width: 100vw;
     overflow: hidden; /* Evita el scroll tradicional */
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Minecraft', sans-serif;
     background-color: #000;
     color: var(--text-color);
     position: relative; /* Añadido para que .story-section se posicione correctamente */
