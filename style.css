@@ -201,17 +201,43 @@ html, body {
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
+    .content-overlay {
+        width: 90vw; /* Ocupa el 90% del ancho de la pantalla */
+        padding: 20px;
+    }
+
     .content-overlay h2 {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Tamaño de fuente más pequeño para el título principal */
     }
+
     .content-overlay p {
-        font-size: 1rem;
+        font-size: 0.9rem; /* Texto de párrafo más pequeño */
+        line-height: 1.5;
     }
+
+    .content-overlay .story-title {
+        font-size: 1.2rem; /* Tamaño de subtítulos más pequeño */
+    }
+
     #main-nav {
         flex-direction: row;
+        gap: 20px; /* Más espacio entre los puntos */
         top: auto;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: none; /* Resetea la transformación */
+        justify-content: center;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.7); /* Fondo para visibilidad */
+        width: 100%;
+    }
+
+    .nav-label {
+        display: none; /* Oculta las etiquetas en móvil */
+    }
+
+    #galeria .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
 }
