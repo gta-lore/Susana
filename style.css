@@ -69,7 +69,9 @@
         
         /* Header */
         header {
-            background: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://i.imgur.com/OHCC66X.jpeg');
+            background-size: cover;
+            background-position: center;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
