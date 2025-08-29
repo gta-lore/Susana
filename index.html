@@ -169,7 +169,68 @@
                 playSusanaBtn.innerHTML = '<i class="fas fa-play"></i> Escuchar Audio';
             };
         }
+
+        // --- Lightbox Logic ---
+        const galleryImages = document.querySelectorAll('#galeria .gallery-item img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const prevBtn = document.querySelector('.lightbox-prev');
+        const nextBtn = document.querySelector('.lightbox-next');
+
+        let currentImageIndex;
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            lightbox.style.display = 'block';
+            lightboxImg.src = galleryImages[currentImageIndex].src;
+            lightboxCaption.innerHTML = galleryImages[currentImageIndex].alt;
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentImageIndex].src;
+            lightboxCaption.innerHTML = galleryImages[currentImageIndex].alt;
+        }
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            lightboxImg.src = galleryImages[currentImageIndex].src;
+            lightboxCaption.innerHTML = galleryImages[currentImageIndex].alt;
+        }
+
+        // Event Listeners
+        galleryImages.forEach((img, index) => {
+            img.addEventListener('click', () => openLightbox(index));
+        });
+
+        if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
+        if(prevBtn) prevBtn.addEventListener('click', showPrevImage);
+        if(nextBtn) nextBtn.addEventListener('click', showNextImage);
+
+        // Close lightbox on background click
+        if(lightbox) {
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+        }
     });
     </script>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox-modal">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <a class="lightbox-prev">&#10094;</a>
+        <a class="lightbox-next">&#10095;</a>
+        <div id="lightbox-caption"></div>
+    </div>
 </body>
 </html>
