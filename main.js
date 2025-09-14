@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const desktop = document.querySelector('.desktop');
     const storyScreen = document.getElementById('story-screen');
 
+    // --- Global State ---
+    let activeTypewriter = null;
+
     // --- Data ---
     const stories = {
         susana: {
@@ -28,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Kariza tuvo una niñez rodeada de lujos, fue instruida en tiro y desde pequeña criada para manejar situaciones difíciles. Desde pequeña fue observadora e inteligente aunque era muy distraída. Durante su adolescencia sus deseos de vida fueron cambiando creándole un descontento a sus padres ya que ellos tenían planes para ella.</p>
 
                 <h4><i class="fas fa-plane-departure"></i> Independencia</h4>
-                <p>Tuvo una pelea eterna con ellos lo que la obligó a la edad de 23 años salir de Corea para iniciar su vida de independencia retando a su padre que le quitó todo el apoyo. Quiso tener una vida lejos de su familia ya que sabía que ellos hacían cosas malas y trató de superarse siendo buena persona y dedicándose a cumplir su sueño: Ser Artista plástica, pero se quedó en sueño ya que a sus 23 años fue parte de la LSPD llegando a tener el puesto de '''Sub inspector Jefe''' por un acuerdo personal con el Jefe a cargo y teniendo la oportunidad de infiltrarse para investigar la droga.</p>
+                <p>Tuvo una pelea eterna con ellos lo que la obligó a la edad de 23 años salir de Corea para iniciar su vida de independencia retando a su padre que le quitó todo el apoyo. Quiso tener una vida lejos de su familia ya que sabía que ellos hacían cosas malas y trató de superarse siendo buena persona y dedicándose a cumplir su sueño: Ser Artista plástica, pero se quedó en sueño ya que a sus 23 años fue parte de la LSPD llegando a tener el puesto de 'Sub inspector Jefe' por un acuerdo personal con el Jefe a cargo y teniendo la oportunidad de infiltrarse para investigar la droga.</p>
 
                 <h4><i class="fas fa-heart"></i> Policía y Amor</h4>
                 <p>En la policía conoció a un chico (nombre desconocido) del cual se enamoró perdidamente de él ya que le recordaba a su ex novio desaparecido. (paradero de el chico desconocido)</p>
@@ -65,30 +68,109 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    // --- Typewriter Effect ---
+    function typewriterEffect(element, text, speed = 30) {
+        let i = 0;
+        let timerId = null;
+        const cursor = '<span class="cursor">|</span>';
+        
+        // Create a temporary div to parse the HTML string
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = text;
+        const allNodes = Array.from(tempDiv.childNodes);
+        const fullText = allNodes.map(node => node.outerHTML || node.textContent).join('');
+
+        element.innerHTML = cursor; // Start with only the cursor
+
+        function type() {
+            if (i < fullText.length) {
+                const char = fullText.charAt(i);
+                element.innerHTML = fullText.substring(0, i + 1) + cursor;
+                i++;
+                timerId = setTimeout(type, speed);
+            } else {
+                element.innerHTML = fullText; // Remove cursor when done
+            }
+        }
+
+        function stop() {
+            clearTimeout(timerId);
+            element.innerHTML = fullText;
+        }
+
+        timerId = setTimeout(type, speed);
+
+        return { stop };
+    }
+
+    // --- Bokeh Background Effect ---
+    function createBubbles(container, count = 20) {
+        for (let i = 0; i < count; i++) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = Math.random() * 100 + 20; // 20px to 120px
+            const duration = Math.random() * 20 + 15; // 15s to 35s
+            const delay = Math.random() * -30; // Start at different times
+            const left = Math.random() * 100;
+
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${left}%`;
+            bubble.style.animationDuration = `${duration}s`;
+            bubble.style.animationDelay = `${delay}s`;
+            bubble.style.bottom = `-${size}px`; // Start from below the screen
+
+            container.appendChild(bubble);
+        }
+    }
+
     // --- Full-screen Story Logic ---
     function showStoryScreen(storyKey) {
         if (!stories[storyKey]) return;
 
         const story = stories[storyKey];
         storyScreen.innerHTML = `
+            <div class="story-background"></div>
             <div class="story-title-bar">
                 <img src="img/folder_icon.png" alt="Icon">
                 <h2>${story.title}</h2>
-                <span class="story-close-btn">&times;</span>
+                <div class="story-controls">
+                    <button class="skip-btn">Omitir</button>
+                    <span class="story-close-btn">&times;</span>
+                </div>
             </div>
-            <div class="story-body">
-                ${story.content}
+            <div class="story-body-wrapper">
+                <div class="story-body"></div>
             </div>
         `;
 
         desktop.classList.add('hidden');
         storyScreen.classList.remove('hidden');
 
+        // Activate effects
+        const backgroundContainer = storyScreen.querySelector('.story-background');
+        createBubbles(backgroundContainer);
+
+        const storyBody = storyScreen.querySelector('.story-body');
+        activeTypewriter = typewriterEffect(storyBody, story.content);
+
+        // Add event listeners
         const closeBtn = storyScreen.querySelector('.story-close-btn');
         closeBtn.addEventListener('click', hideStoryScreen);
+
+        const skipBtn = storyScreen.querySelector('.skip-btn');
+        skipBtn.addEventListener('click', () => {
+            if (activeTypewriter) {
+                activeTypewriter.stop();
+            }
+        });
     }
 
     function hideStoryScreen() {
+        if (activeTypewriter) {
+            activeTypewriter.stop();
+            activeTypewriter = null;
+        }
         storyScreen.classList.add('hidden');
         desktop.classList.remove('hidden');
         storyScreen.innerHTML = ''; // Clean up

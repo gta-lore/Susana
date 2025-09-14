@@ -1,4 +1,4 @@
-/* --- Keyframes for Animation --- */
+/* --- Keyframes for Animations --- */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -15,6 +15,21 @@
     }
 }
 
+@keyframes blinking-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes move-bubbles {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100vh);
+    }
+}
+
+
 /* --- Base Styles --- */
 body, html {
     margin: 0;
@@ -22,7 +37,7 @@ body, html {
     height: 100%;
     overflow: hidden;
     font-family: 'Segoe UI', 'Tahoma', sans-serif;
-    background-color: #008080; /* Default Windows background color */
+    background-color: #008080;
 }
 
 .hidden {
@@ -77,19 +92,42 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #ECE9D8; /* Same as modal body */
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.3s ease-in-out;
+    background: linear-gradient(to bottom, #ffafc8, #ff85b4);
+    overflow: hidden;
 }
 
+/* New Bokeh Background */
+.story-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bubble {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    animation: move-bubbles linear infinite;
+}
+
+/* --- Story Title Bar --- */
 .story-title-bar {
     background: linear-gradient(to bottom, #FF85B4, #C71585);
     color: white;
     padding: 5px 10px;
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Prevents the title bar from shrinking */
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .story-title-bar img {
@@ -106,6 +144,27 @@ body, html {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.story-controls {
+    display: flex;
+    align-items: center;
+}
+
+.skip-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.7);
+    color: white;
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.skip-btn:hover {
+    background-color: rgba(255,255,255,0.2);
 }
 
 .story-close-btn {
@@ -127,128 +186,68 @@ body, html {
     background-color: #E06156;
 }
 
-.story-body {
-    padding: 15px;
+/* --- Story Body / Content Card --- */
+.story-body-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
     overflow-y: auto;
+}
+
+.story-body {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    max-width: 800px;
+    width: 100%;
     color: #333;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+    font-family: 'Georgia', serif;
+    line-height: 1.8;
+    font-size: 1.1em;
 }
 
 .story-body h4 {
     color: #C71585;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
 }
 
 .story-body .fas {
-    margin-right: 8px;
+    margin-right: 10px;
     color: #C71585;
 }
 
-
-/* --- Photos Modal (Kept for the Photos App) --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background-color: #ECE9D8;
-    border: 1px solid #003B7C;
-    border-radius: 5px;
-    width: 95%;
-    max-width: 600px;
-    max-height: 80vh;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    animation: fadeInScaleUp 0.3s ease-out;
-}
-
-.modal-title-bar {
-    background: linear-gradient(to bottom, #005a9e, #003b7c);
-    color: white;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-    cursor: default;
-}
-
-.modal-title-bar img {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-}
-
-.modal-title-bar h2 {
-    font-size: 1em;
+.story-body .cursor {
+    animation: blinking-cursor 1s step-end infinite;
     font-weight: bold;
-    margin: 0;
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.modal-close {
-    background-color: #C84E43;
-    color: white;
-    border: 1px solid #A53C32;
-    border-radius: 3px;
-    width: 22px;
-    height: 22px;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.modal-close:hover {
-    background-color: #E06156;
-}
-
-.modal-body {
-    padding: 15px;
-    overflow-y: auto;
     color: #333;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
 }
 
-.photo-section h3 {
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
 
-.photo-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
-}
+/* --- Photos Modal (Unchanged) --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.modal-content { background-color: #ECE9D8; border: 1px solid #003B7C; border-radius: 5px; width: 95%; max-width: 600px; max-height: 80vh; box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; animation: fadeInScaleUp 0.3s ease-out; }
+.modal-title-bar { background: linear-gradient(to bottom, #005a9e, #003b7c); color: white; padding: 5px 10px; display: flex; align-items: center; cursor: default; }
+.modal-title-bar img { width: 16px; height: 16px; margin-right: 8px; }
+.modal-title-bar h2 { font-size: 1em; font-weight: bold; margin: 0; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.modal-close { background-color: #C84E43; color: white; border: 1px solid #A53C32; border-radius: 3px; width: 22px; height: 22px; font-size: 16px; font-weight: bold; line-height: 20px; text-align: center; cursor: pointer; transition: background-color 0.2s; }
+.modal-close:hover { background-color: #E06156; }
+.modal-body { padding: 15px; overflow-y: auto; color: #333; font-family: 'Arial', sans-serif; line-height: 1.6; }
+.photo-section h3 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; }
+.photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+.photo-gallery img { width: 100%; height: auto; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; transition: transform 0.2s; }
+.photo-gallery img:hover { transform: scale(1.05); }
 
-.photo-gallery img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.photo-gallery img:hover {
-    transform: scale(1.05);
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .story-body {
+        font-size: 1em;
+        padding: 20px;
+    }
 }
