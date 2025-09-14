@@ -1,0 +1,254 @@
+/* --- Keyframes for Animation --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* --- Base Styles --- */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', 'Tahoma', sans-serif;
+    background-color: #008080; /* Default Windows background color */
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Desktop Styles --- */
+.desktop {
+    background-image: url('img/windows_bg.png');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 15px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.shortcut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.shortcut img {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 5px;
+}
+
+.shortcut span {
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+/* --- Story Screen (Full-screen view) --- */
+#story-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ECE9D8; /* Same as modal body */
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.story-title-bar {
+    background: linear-gradient(to bottom, #FF85B4, #C71585);
+    color: white;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Prevents the title bar from shrinking */
+}
+
+.story-title-bar img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.story-title-bar h2 {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.story-close-btn {
+    background-color: #C84E43;
+    color: white;
+    border: 1px solid #A53C32;
+    border-radius: 3px;
+    width: 22px;
+    height: 22px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.story-close-btn:hover {
+    background-color: #E06156;
+}
+
+.story-body {
+    padding: 15px;
+    overflow-y: auto;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.story-body h4 {
+    color: #C71585;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.story-body .fas {
+    margin-right: 8px;
+    color: #C71585;
+}
+
+
+/* --- Photos Modal (Kept for the Photos App) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #ECE9D8;
+    border: 1px solid #003B7C;
+    border-radius: 5px;
+    width: 95%;
+    max-width: 600px;
+    max-height: 80vh;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fadeInScaleUp 0.3s ease-out;
+}
+
+.modal-title-bar {
+    background: linear-gradient(to bottom, #005a9e, #003b7c);
+    color: white;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    cursor: default;
+}
+
+.modal-title-bar img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.modal-title-bar h2 {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modal-close {
+    background-color: #C84E43;
+    color: white;
+    border: 1px solid #A53C32;
+    border-radius: 3px;
+    width: 22px;
+    height: 22px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-close:hover {
+    background-color: #E06156;
+}
+
+.modal-body {
+    padding: 15px;
+    overflow-y: auto;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.photo-section h3 {
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.photo-gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.photo-gallery img:hover {
+    transform: scale(1.05);
+}
