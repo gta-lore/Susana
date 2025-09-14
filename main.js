@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><i class="fas fa-baby"></i> Susana tuvo tres hijos, se ha mencionado solo a dos (?) y se sabe que a uno de ellos lo esta buscando Kariza.</p>
                 <p><i class="fas fa-cross"></i> Tuvo a nieto llamado Enzo que le decia menso el cual tambien murio se desconoce el motivo (?).</p>
                 <p><i class="fas fa-file-signature"></i> Adopta a Kariza Sanmiong a la edad de 24 años (Salchicha Salmon) convirtiendose en su hija. Gracias a ella, tiene nietos que la esperan en Corea.</p>
-                <p><i class="fas fa-search"></i> La busqueda de su hijo sigue en pie. (editado 8 abr. 12:16 a. m.)</p>
+                <p><i class="fas fa-search"></i> La busqueda de su hijo sigue en pie.</p>
             `
         },
         kariza: {
@@ -56,15 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const photos = {
         kariza: [
-            'https://i.imgur.com/zYIeYyw.jpeg',
-            'https://i.postimg.cc/rppFXMfC/zfp-SSNwrvzuc-png.webp',
-            'https://i.postimg.cc/KzkGjQS1/Untitled-Project.jpg',
-            'https://i.postimg.cc/cJ51d2jq/c-Yl-TOMJEAlan-png.webp'
+            'img/kariza.jpg',
+            'img/kariza 2.jpg',
+            'img/kariza 3.webp',
+            'img/kariza (2).jpg'
         ],
         susana: [
-            'https://i.postimg.cc/PrhGwf5k/Uf-RGv-Zp91iz4.webp',
-            'https://i.postimg.cc/kg1LzxFn/ry-Ltrbfj4-Qy-I.webp',
-            'https://i.postimg.cc/sXq24q9P/rkrz5m.jpg'
+            'img/susana.jpg',
+            'img/Susana 1.jpg',
+            'img/Susana 2.jpg',
+            'img/Susana 4.png',
+            'img/Susana 5.jpg',
+            'img/Susana 7.webp',
+            'img/Susana 8.webp'
         ]
     };
 
@@ -176,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         storyScreen.innerHTML = ''; // Clean up
     }
 
-    // --- Photos Modal Logic (Remains the same) ---
+    // --- Photos Modal & Fullscreen Logic ---
     function showPhotosModal() {
         if (document.querySelector('.modal-overlay')) return;
 
@@ -195,11 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="modal-body">
                     <div class="photo-section">
-                        <h3>Fotos de Kariza</h3>
+                        <h3>Kariza</h3>
                         <div class="photo-gallery">${karizaGallery}</div>
                     </div>
                     <div class="photo-section">
-                        <h3>Fotos de Susana</h3>
+                        <h3>Susana</h3>
                         <div class="photo-gallery">${susanaGallery}</div>
                     </div>
                 </div>
@@ -208,14 +212,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.body.appendChild(modal);
 
-        const closeModal = modal.querySelector('.modal-close');
-        closeModal.addEventListener('click', () => {
-            document.body.removeChild(modal);
-        });
-
+        // Combined event listener for closing modal and opening fullscreen view
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
+            // Close modal if the close button or the background is clicked
+            if (e.target.classList.contains('modal-close') || e.target === modal) {
                 document.body.removeChild(modal);
+                return; // Stop further execution
+            }
+
+            // Open fullscreen view if an image in the gallery is clicked
+            if (e.target.tagName === 'IMG' && e.target.closest('.photo-gallery')) {
+                const fullscreenOverlay = document.createElement('div');
+                fullscreenOverlay.classList.add('fullscreen-overlay');
+                fullscreenOverlay.innerHTML = `
+                    <div class="fullscreen-content">
+                        <div class="fullscreen-title-bar">
+                            <h2>Visor de Imágenes</h2>
+                            <span class="fullscreen-close">&times;</span>
+                        </div>
+                        <div class="fullscreen-body">
+                            <img src="${e.target.src}" class="fullscreen-image" alt="Vista completa">
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(fullscreenOverlay);
+
+                // Add listener to close the fullscreen view
+                fullscreenOverlay.addEventListener('click', (e_fs) => {
+                    // Close if the close button or the dark background is clicked
+                    if (e_fs.target.classList.contains('fullscreen-close') || e_fs.target === fullscreenOverlay) {
+                        document.body.removeChild(fullscreenOverlay);
+                    }
+                });
             }
         });
     }
