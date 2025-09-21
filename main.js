@@ -180,71 +180,74 @@ document.addEventListener('DOMContentLoaded', () => {
         storyScreen.innerHTML = ''; // Clean up
     }
 
-    // --- Photos Modal & Fullscreen Logic ---
-    function showPhotosModal() {
-        if (document.querySelector('.modal-overlay')) return;
+    // --- Photos Gallery Screen Logic ---
+    const galleryScreen = document.getElementById('gallery-screen');
 
-        const modal = document.createElement('div');
-        modal.classList.add('modal-overlay');
+    function showGalleryScreen() {
+        let karizaGallery = photos.kariza.map(url => `<div class="photo-item"><img src="${url}" alt="Foto de Kariza"></div>`).join('');
+        let susanaGallery = photos.susana.map(url => `<div class="photo-item"><img src="${url}" alt="Foto de Susana"></div>`).join('');
 
-        let karizaGallery = photos.kariza.map(url => `<img src="${url}" alt="Foto de Kariza">`).join('');
-        let susanaGallery = photos.susana.map(url => `<img src="${url}" alt="Foto de Susana">`).join('');
-
-        modal.innerHTML = `
-            <div class="modal-content">
-                 <div class="modal-title-bar">
+        galleryScreen.innerHTML = `
+            <div class="gallery-window">
+                <div class="gallery-title-bar">
                     <img src="img/galería.png" alt="Icon">
                     <h2>Fotos</h2>
-                    <span class="modal-close">&times;</span>
+                    <span class="gallery-close-btn">&times;</span>
                 </div>
-                <div class="modal-body">
+                <div class="gallery-body">
                     <div class="photo-section">
                         <h3>Kariza</h3>
-                        <div class="photo-gallery">${karizaGallery}</div>
+                        <div class="photo-grid">${karizaGallery}</div>
                     </div>
                     <div class="photo-section">
                         <h3>Susana</h3>
-                        <div class="photo-gallery">${susanaGallery}</div>
+                        <div class="photo-grid">${susanaGallery}</div>
                     </div>
                 </div>
             </div>
         `;
 
-        document.body.appendChild(modal);
+        desktop.classList.add('hidden');
+        galleryScreen.classList.remove('hidden');
 
-        // Combined event listener for closing modal and opening fullscreen view
-        modal.addEventListener('click', (e) => {
-            // Close modal if the close button or the background is clicked
-            if (e.target.classList.contains('modal-close') || e.target === modal) {
-                document.body.removeChild(modal);
-                return; // Stop further execution
+        // Event listener for closing the gallery or opening the image viewer
+        galleryScreen.addEventListener('click', (e) => {
+            if (e.target.classList.contains('gallery-close-btn') || e.target.classList.contains('gallery-window-backdrop')) {
+                hideGalleryScreen();
             }
 
-            // Open fullscreen view if an image in the gallery is clicked
-            if (e.target.tagName === 'IMG' && e.target.closest('.photo-gallery')) {
-                const fullscreenOverlay = document.createElement('div');
-                fullscreenOverlay.classList.add('fullscreen-overlay');
-                fullscreenOverlay.innerHTML = `
-                    <div class="fullscreen-content">
-                        <div class="fullscreen-title-bar">
-                            <h2>Visor de Imágenes</h2>
-                            <span class="fullscreen-close">&times;</span>
-                        </div>
-                        <div class="fullscreen-body">
-                            <img src="${e.target.src}" class="fullscreen-image" alt="Vista completa">
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(fullscreenOverlay);
+            if (e.target.tagName === 'IMG' && e.target.closest('.photo-item')) {
+                showFullScreenImage(e.target.src);
+            }
+        });
+    }
 
-                // Add listener to close the fullscreen view
-                fullscreenOverlay.addEventListener('click', (e_fs) => {
-                    // Close if the close button or the dark background is clicked
-                    if (e_fs.target.classList.contains('fullscreen-close') || e_fs.target === fullscreenOverlay) {
-                        document.body.removeChild(fullscreenOverlay);
-                    }
-                });
+    function hideGalleryScreen() {
+        galleryScreen.classList.add('hidden');
+        desktop.classList.remove('hidden');
+        galleryScreen.innerHTML = ''; // Clean up
+    }
+
+    function showFullScreenImage(src) {
+        const fullscreenOverlay = document.createElement('div');
+        fullscreenOverlay.classList.add('fullscreen-overlay');
+        fullscreenOverlay.innerHTML = `
+            <div class="fullscreen-content">
+                <div class="fullscreen-title-bar">
+                    <h2>Visor de Imágenes</h2>
+                    <span class="fullscreen-close">&times;</span>
+                </div>
+                <div class="fullscreen-body">
+                    <img src="${src}" class="fullscreen-image" alt="Vista completa">
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(fullscreenOverlay);
+
+        fullscreenOverlay.addEventListener('click', (e) => {
+            if (e.target.classList.contains('fullscreen-close') || e.target === fullscreenOverlay) {
+                document.body.removeChild(fullscreenOverlay);
             }
         });
     }
@@ -252,5 +255,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event Listeners ---
     document.getElementById('susana-shortcut').addEventListener('click', () => showStoryScreen('susana'));
     document.getElementById('kariza-shortcut').addEventListener('click', () => showStoryScreen('kariza'));
-    document.getElementById('photos-shortcut').addEventListener('click', showPhotosModal);
+    document.getElementById('photos-shortcut').addEventListener('click', showGalleryScreen);
 });

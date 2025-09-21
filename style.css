@@ -231,36 +231,123 @@ body, html {
 }
 
 
-/* --- Photos Modal (Unchanged) --- */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-.modal-content { background-color: #ECE9D8; border: 1px solid #003B7C; border-radius: 5px; width: 95%; max-width: 600px; max-height: 80vh; box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; animation: fadeInScaleUp 0.3s ease-out; }
-.modal-title-bar { background: linear-gradient(to bottom, #005a9e, #003b7c); color: white; padding: 5px 10px; display: flex; align-items: center; cursor: default; }
-.modal-title-bar img { width: 16px; height: 16px; margin-right: 8px; }
-.modal-title-bar h2 { font-size: 1em; font-weight: bold; margin: 0; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.modal-close { background-color: #C84E43; color: white; border: 1px solid #A53C32; border-radius: 3px; width: 22px; height: 22px; font-size: 16px; font-weight: bold; line-height: 20px; text-align: center; cursor: pointer; transition: background-color 0.2s; }
-.modal-close:hover { background-color: #E06156; }
-.modal-body { padding: 15px; overflow-y: auto; color: #333; font-family: 'Arial', sans-serif; line-height: 1.6; }
-.photo-section h3 { color: #333; border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-bottom: 10px; }
-.photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
-.photo-gallery img { width: 100%; height: auto; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; transition: transform 0.2s; }
-.photo-gallery img:hover { transform: scale(1.05); }
-
-/* Responsive Adjustments */
-@media (max-width: 600px) {
-    .story-body {
-        font-size: 1em;
-        padding: 20px;
-    }
+/* --- Gallery Screen (Win 11 Style) --- */
+#gallery-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 25, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+    z-index: 1000;
 }
 
-/* --- Fullscreen Image Viewer --- */
+.gallery-window {
+    width: 90%;
+    height: 90%;
+    background: rgba(40, 40, 50, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fadeInScaleUp 0.4s ease-out;
+}
+
+.gallery-title-bar {
+    background: rgba(30, 30, 40, 0.8);
+    color: #f0f0f0;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.gallery-title-bar img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.gallery-title-bar h2 {
+    font-size: 1em;
+    font-weight: 600;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.gallery-close-btn {
+    background-color: #C84E43;
+    color: white;
+    border: 1px solid #A53C32;
+    border-radius: 5px;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.gallery-close-btn:hover {
+    background-color: #E06156;
+}
+
+.gallery-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.gallery-body .photo-section h3 {
+    color: #e0e0e0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.photo-item img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px 5px rgba(0, 191, 255, 0.5), 0 0 25px 10px rgba(0, 191, 255, 0.3);
+}
+
+/* --- Fullscreen Image Viewer (Updated Style) --- */
 .fullscreen-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -271,13 +358,13 @@ body, html {
 }
 
 .fullscreen-content {
-    background-color: #ECE9D8;
-    border: 1px solid #003B7C;
-    border-radius: 5px;
+    background: rgba(40, 40, 50, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    border-radius: 12px;
     width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    max-width: 95%;
+    max-height: 95%;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -285,9 +372,9 @@ body, html {
 }
 
 .fullscreen-title-bar {
-    background: linear-gradient(to bottom, #005a9e, #003b7c);
-    color: white;
-    padding: 5px 10px;
+    background: rgba(30, 30, 40, 0.9);
+    color: #f0f0f0;
+    padding: 8px 15px;
     display: flex;
     align-items: center;
     cursor: default;
@@ -296,24 +383,21 @@ body, html {
 
 .fullscreen-title-bar h2 {
     font-size: 1em;
-    font-weight: bold;
+    font-weight: 600;
     margin: 0;
     flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .fullscreen-close {
     background-color: #C84E43;
     color: white;
     border: 1px solid #A53C32;
-    border-radius: 3px;
-    width: 22px;
-    height: 22px;
+    border-radius: 5px;
+    width: 24px;
+    height: 24px;
     font-size: 16px;
     font-weight: bold;
-    line-height: 20px;
+    line-height: 22px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -323,8 +407,7 @@ body, html {
 }
 
 .fullscreen-body {
-    padding: 5px;
-    background-color: #FFF;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -336,4 +419,25 @@ body, html {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    border-radius: 6px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    .gallery-body {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .story-body {
+        font-size: 1em;
+        padding: 20px;
+    }
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
 }
