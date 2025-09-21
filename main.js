@@ -107,27 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return { stop };
     }
 
-    // --- Bokeh Background Effect ---
-    function createBubbles(container, count = 20) {
-        for (let i = 0; i < count; i++) {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            const size = Math.random() * 100 + 20; // 20px to 120px
-            const duration = Math.random() * 20 + 15; // 15s to 35s
-            const delay = Math.random() * -30; // Start at different times
-            const left = Math.random() * 100;
-
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-            bubble.style.left = `${left}%`;
-            bubble.style.animationDuration = `${duration}s`;
-            bubble.style.animationDelay = `${delay}s`;
-            bubble.style.bottom = `-${size}px`; // Start from below the screen
-
-            container.appendChild(bubble);
-        }
-    }
-
     // --- Full-screen Story Logic ---
     function showStoryScreen(storyKey) {
         if (!stories[storyKey]) return;
@@ -150,10 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         desktop.classList.add('hidden');
         storyScreen.classList.remove('hidden');
-
-        // Activate effects
-        const backgroundContainer = storyScreen.querySelector('.story-background');
-        createBubbles(backgroundContainer);
 
         const storyBody = storyScreen.querySelector('.story-body');
         activeTypewriter = typewriterEffect(storyBody, story.content);

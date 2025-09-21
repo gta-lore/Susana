@@ -86,7 +86,7 @@ body, html {
     word-break: break-word;
 }
 
-/* --- Story Screen (Full-screen view) --- */
+/* --- Story Screen (Futuristic Windows 11 Style) --- */
 #story-screen {
     position: fixed;
     top: 0;
@@ -96,11 +96,11 @@ body, html {
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.3s ease-in-out;
-    background: linear-gradient(to bottom, #ffafc8, #ff85b4);
+    background: #0d0d0d; /* Dark background */
     overflow: hidden;
 }
 
-/* New Bokeh Background */
+/* New Futuristic Background */
 .story-background {
     position: absolute;
     top: 0;
@@ -109,6 +109,8 @@ body, html {
     height: 100%;
     overflow: hidden;
     z-index: 0;
+    background: radial-gradient(circle at 10% 20%, rgba(255, 105, 180, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(0, 191, 255, 0.15) 0%, transparent 30%);
 }
 
 .bubble {
@@ -118,33 +120,33 @@ body, html {
     animation: move-bubbles linear infinite;
 }
 
-/* --- Story Title Bar --- */
+/* --- Story Title Bar (Futuristic) --- */
 .story-title-bar {
-    background: linear-gradient(to bottom, #FF85B4, #C71585);
-    color: white;
-    padding: 5px 10px;
+    background: rgba(25, 25, 30, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #e0e0e0;
+    padding: 8px 15px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
     position: relative;
     z-index: 2;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .story-title-bar img {
     width: 16px;
     height: 16px;
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
 .story-title-bar h2 {
     font-size: 1em;
-    font-weight: bold;
+    font-weight: 600;
     margin: 0;
     flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #f5f5f5;
 }
 
 .story-controls {
@@ -153,11 +155,11 @@ body, html {
 }
 
 .skip-btn {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
-    border-radius: 3px;
-    padding: 2px 8px;
+    border-radius: 5px;
+    padding: 4px 10px;
     margin-right: 10px;
     cursor: pointer;
     font-size: 12px;
@@ -165,29 +167,30 @@ body, html {
 }
 
 .skip-btn:hover {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .story-close-btn {
     background-color: #C84E43;
     color: white;
-    border: 1px solid #A53C32;
-    border-radius: 3px;
-    width: 22px;
-    height: 22px;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 28px;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .story-close-btn:hover {
     background-color: #E06156;
+    transform: scale(1.1);
 }
 
-/* --- Story Body / Content Card --- */
+/* --- Story Body / Content Card (Futuristic) --- */
 .story-body-wrapper {
     flex-grow: 1;
     display: flex;
@@ -200,34 +203,39 @@ body, html {
 }
 
 .story-body {
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(5px);
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    padding: 25px;
+    background-color: rgba(30, 30, 35, 0.75);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    padding: 30px;
     max-width: 800px;
     width: 100%;
-    color: #333;
-    font-family: 'Georgia', serif;
-    line-height: 1.8;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', 'Tahoma', sans-serif;
+    line-height: 1.9;
     font-size: 1.1em;
 }
 
 .story-body h4 {
-    color: #C71585;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
+    color: #ff69b4; /* Hot Pink */
+    text-shadow: 0 0 4px rgba(255, 105, 180, 0.7);
+    border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+    padding-bottom: 8px;
+    font-weight: 600;
 }
 
 .story-body .fas {
-    margin-right: 10px;
-    color: #C71585;
+    margin-right: 12px;
+    color: #ff69b4; /* Hot Pink */
+    text-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
 }
 
 .story-body .cursor {
     animation: blinking-cursor 1s step-end infinite;
     font-weight: bold;
-    color: #333;
+    color: #ff69b4;
 }
 
 
