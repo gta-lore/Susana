@@ -393,6 +393,76 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function showBrowserWindow() {
+        const windowId = 'browser-window';
+        const existingWindow = document.getElementById(windowId);
+
+        if (existingWindow) {
+            existingWindow.classList.remove('hidden'); // Un-minimize
+            highestZ++;
+            existingWindow.style.zIndex = highestZ;
+            return;
+        }
+
+        const browserContent = `
+            <div class="browser-toolbar">
+                <button class="browser-back-btn"><i class="fas fa-arrow-left"></i></button>
+                <button class="browser-forward-btn"><i class="fas fa-arrow-right"></i></button>
+                <input type="text" class="browser-url-input" value="https://www.google.com">
+                <button class="browser-go-btn"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <iframe class="browser-iframe" src="https://www.google.com"></iframe>
+        `;
+
+        const browserWindow = createWindow(
+            windowId,
+            'Navegador',
+            'img/browser_icon.svg',
+            browserContent,
+            '900px', // Wider for a browser
+            '600px'  // Taller for a browser
+        );
+
+        const iframe = browserWindow.querySelector('.browser-iframe');
+        const urlInput = browserWindow.querySelector('.browser-url-input');
+        const goBtn = browserWindow.querySelector('.browser-go-btn');
+        const backBtn = browserWindow.querySelector('.browser-back-btn');
+        const forwardBtn = browserWindow.querySelector('.browser-forward-btn');
+
+        const navigate = (url) => {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url; // Default to https
+            }
+            iframe.src = url;
+            urlInput.value = url;
+        };
+
+        goBtn.addEventListener('click', () => navigate(urlInput.value));
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                navigate(urlInput.value);
+            }
+        });
+
+        // Basic history navigation (might be limited by iframe security)
+        backBtn.addEventListener('click', () => {
+            try { iframe.contentWindow.history.back(); } catch (e) { console.warn("Browser history back failed:", e); }
+        });
+        forwardBtn.addEventListener('click', () => {
+            try { iframe.contentWindow.history.forward(); } catch (e) { console.warn("Browser history forward failed:", e); }
+        });
+
+        // Update URL bar when iframe navigates (if same-origin)
+        iframe.addEventListener('load', () => {
+            try {
+                urlInput.value = iframe.contentWindow.location.href;
+            } catch (e) {
+                // Cross-origin frame, cannot access location.href
+                urlInput.value = iframe.src; // Fallback to iframe's current src
+            }
+        });
+    }
+
     function showFullScreenImage(src) {
         const fullscreenOverlay = document.createElement('div');
         fullscreenOverlay.classList.add('fullscreen-overlay');
@@ -422,6 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('susana-shortcut').addEventListener('click', () => showStoryScreen('susana'));
     document.getElementById('kariza-shortcut').addEventListener('click', () => showStoryScreen('kariza'));
     document.getElementById('photos-shortcut').addEventListener('click', showGalleryScreen);
+    document.getElementById('browser-shortcut').addEventListener('click', showBrowserWindow);
 
     // Start Menu items
     document.getElementById('start-menu-susana').addEventListener('click', () => {
@@ -438,6 +509,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('start-menu-photos').addEventListener('click', () => {
         showGalleryScreen();
+        if (!startMenu.classList.contains('hidden')) {
+            toggleStartMenu();
+        }
+    });
+    document.getElementById('start-menu-browser').addEventListener('click', () => {
+        showBrowserWindow();
         if (!startMenu.classList.contains('hidden')) {
             toggleStartMenu();
         }
