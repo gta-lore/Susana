@@ -187,50 +187,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Full-screen Story Logic ---
     function showStoryScreen(storyKey) {
-        if (!stories[storyKey]) return;
+        const windowId = `story-window-${storyKey}`;
+        // Prevent duplicate windows
+        if (document.getElementById(windowId)) {
+            const existingWindow = document.getElementById(windowId);
+            highestZ++;
+            existingWindow.style.zIndex = highestZ;
+            return;
+        }
 
+        if (!stories[storyKey]) return;
         const story = stories[storyKey];
-        storyScreen.innerHTML = `
-            <div class="story-background"></div>
-            <div class="story-title-bar">
+
+        const storyWindow = document.createElement('div');
+        storyWindow.className = 'window';
+        storyWindow.id = windowId;
+        storyWindow.style.width = '700px'; // Story windows can be wider
+        storyWindow.innerHTML = `
+            <div class="window-title-bar">
                 <img src="img/folder_icon.png" alt="Icon">
                 <h2>${story.title}</h2>
-                <div class="story-controls">
-                    <button class="skip-btn">Omitir</button>
-                    <span class="story-close-btn">&times;</span>
-                </div>
+                <span class="window-close-btn">&times;</span>
             </div>
-            <div class="story-body-wrapper">
-                <div class="story-body"></div>
-            </div>
+            <div class="window-body story-body"></div>
         `;
 
-        desktop.classList.add('hidden');
-        storyScreen.classList.remove('hidden');
+        desktop.appendChild(storyWindow);
+        makeDraggable(storyWindow);
 
-        const storyBody = storyScreen.querySelector('.story-body');
+        // Center the new window
+        storyWindow.style.left = `${(window.innerWidth - storyWindow.offsetWidth) / 2}px`;
+        storyWindow.style.top = `${(window.innerHeight - storyWindow.offsetHeight) / 3}px`;
+
+        const storyBody = storyWindow.querySelector('.story-body');
         activeTypewriter = typewriterEffect(storyBody, story.content);
 
-        // Add event listeners
-        const closeBtn = storyScreen.querySelector('.story-close-btn');
-        closeBtn.addEventListener('click', hideStoryScreen);
-
-        const skipBtn = storyScreen.querySelector('.skip-btn');
-        skipBtn.addEventListener('click', () => {
-            if (activeTypewriter) {
-                activeTypewriter.stop();
+        // Add event listeners for this window
+        storyWindow.addEventListener('click', (e) => {
+            if (e.target.classList.contains('window-close-btn')) {
+                if (activeTypewriter) {
+                    activeTypewriter.stop();
+                    activeTypewriter = null;
+                }
+                desktop.removeChild(storyWindow);
+            }
+            if (e.target.classList.contains('skip-btn')) { // This button doesn't exist anymore, but let's keep the logic for a moment
+                 if (activeTypewriter) {
+                    activeTypewriter.stop();
+                }
             }
         });
-    }
-
-    function hideStoryScreen() {
-        if (activeTypewriter) {
-            activeTypewriter.stop();
-            activeTypewriter = null;
-        }
-        storyScreen.classList.add('hidden');
-        desktop.classList.remove('hidden');
-        storyScreen.innerHTML = ''; // Clean up
     }
 
     // --- Photos Gallery Screen Logic ---
