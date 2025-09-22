@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const dragStart = (e) => {
+            if (element.classList.contains('maximized')) {
+                return;
+            }
             isDragging = true;
             bringToFront();
 
@@ -238,12 +241,99 @@ document.addEventListener('DOMContentLoaded', () => {
         return { stop };
     }
 
-    // --- Full-screen Story Logic ---
+    // --- Window Creation and Management ---
+
+    function attachWindowEvents(windowEl) {
+        windowEl.addEventListener('click', (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            if (button.classList.contains('window-close-btn')) {
+                if (windowEl.id.startsWith('story-window-') && activeTypewriter) {
+                    activeTypewriter.stop();
+                    activeTypewriter = null;
+                }
+                windowEl.remove();
+            }
+
+            if (button.classList.contains('window-minimize-btn')) {
+                windowEl.classList.add('hidden');
+            }
+
+            if (button.classList.contains('window-maximize-btn')) {
+                const icon = button.querySelector('i');
+                if (windowEl.classList.toggle('maximized')) {
+                    // Store original state
+                    windowEl.dataset.originalLeft = windowEl.style.left;
+                    windowEl.dataset.originalTop = windowEl.style.top;
+                    windowEl.dataset.originalWidth = windowEl.style.width;
+                    windowEl.dataset.originalHeight = windowEl.style.height;
+
+                    // Maximize
+                    windowEl.style.left = '0';
+                    windowEl.style.top = '0';
+                    windowEl.style.width = '100vw';
+                    windowEl.style.height = 'calc(100vh - 40px)'; // Adjust for taskbar
+
+                    icon.classList.remove('fa-window-maximize');
+                    icon.classList.add('fa-window-restore');
+                    windowEl.querySelector('.window-title-bar').style.cursor = 'default';
+                } else {
+                    // Restore
+                    windowEl.style.left = windowEl.dataset.originalLeft;
+                    windowEl.style.top = windowEl.dataset.originalTop;
+                    windowEl.style.width = windowEl.dataset.originalWidth;
+                    windowEl.style.height = windowEl.dataset.originalHeight;
+
+                    icon.classList.remove('fa-window-restore');
+                    icon.classList.add('fa-window-maximize');
+                    windowEl.querySelector('.window-title-bar').style.cursor = 'move';
+                }
+            }
+        });
+    }
+
+    function createWindow(id, title, icon, content, width = '600px', height = '400px') {
+        const windowEl = document.createElement('div');
+        windowEl.className = 'window';
+        windowEl.id = id;
+        windowEl.style.width = width;
+        windowEl.style.height = height;
+
+        windowEl.innerHTML = `
+            <div class="window-title-bar">
+                <img src="${icon}" alt="Icon">
+                <h2>${title}</h2>
+                <div class="window-controls">
+                    <button class="window-minimize-btn"><i class="far fa-window-minimize"></i></button>
+                    <button class="window-maximize-btn"><i class="far fa-window-maximize"></i></button>
+                    <button class="window-close-btn">&times;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                ${content}
+            </div>
+        `;
+
+        desktop.appendChild(windowEl);
+        makeDraggable(windowEl);
+        attachWindowEvents(windowEl);
+
+        // Center the new window and bring to front
+        highestZ++;
+        windowEl.style.zIndex = highestZ;
+        windowEl.style.left = `${(window.innerWidth - windowEl.offsetWidth) / 2}px`;
+        windowEl.style.top = `${(window.innerHeight - windowEl.offsetHeight) / 3}px`;
+        
+        return windowEl;
+    }
+
     function showStoryScreen(storyKey) {
         const windowId = `story-window-${storyKey}`;
-        // Prevent duplicate windows
-        if (document.getElementById(windowId)) {
-            const existingWindow = document.getElementById(windowId);
+        const existingWindow = document.getElementById(windowId);
+
+        if (existingWindow) {
+            existingWindow.classList.remove('hidden'); // Un-minimize
             highestZ++;
             existingWindow.style.zIndex = highestZ;
             return;
@@ -252,51 +342,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!stories[storyKey]) return;
         const story = stories[storyKey];
 
-        const storyWindow = document.createElement('div');
-        storyWindow.className = 'window';
-        storyWindow.id = windowId;
-        storyWindow.style.width = '700px'; // Story windows can be wider
-        storyWindow.innerHTML = `
-            <div class="window-title-bar">
-                <img src="img/folder_icon.png" alt="Icon">
-                <h2>${story.title}</h2>
-                <span class="window-close-btn">&times;</span>
-            </div>
-            <div class="window-body story-body"></div>
-        `;
-
-        desktop.appendChild(storyWindow);
-        makeDraggable(storyWindow);
-
-        // Center the new window
-        storyWindow.style.left = `${(window.innerWidth - storyWindow.offsetWidth) / 2}px`;
-        storyWindow.style.top = `${(window.innerHeight - storyWindow.offsetHeight) / 3}px`;
+        const storyWindow = createWindow(
+            windowId,
+            story.title,
+            'img/folder_icon.png',
+            '<div class="story-body"></div>',
+            '700px'
+        );
 
         const storyBody = storyWindow.querySelector('.story-body');
         activeTypewriter = typewriterEffect(storyBody, story.content);
-
-        // Add event listeners for this window
-        storyWindow.addEventListener('click', (e) => {
-            if (e.target.classList.contains('window-close-btn')) {
-                if (activeTypewriter) {
-                    activeTypewriter.stop();
-                    activeTypewriter = null;
-                }
-                desktop.removeChild(storyWindow);
-            }
-            if (e.target.classList.contains('skip-btn')) { // This button doesn't exist anymore, but let's keep the logic for a moment
-                 if (activeTypewriter) {
-                    activeTypewriter.stop();
-                }
-            }
-        });
     }
 
-    // --- Photos Gallery Screen Logic ---
     function showGalleryScreen() {
-        // Prevent duplicate windows
-        if (document.getElementById('gallery-window')) {
-            const existingWindow = document.getElementById('gallery-window');
+        const windowId = 'gallery-window';
+        const existingWindow = document.getElementById(windowId);
+
+        if (existingWindow) {
+            existingWindow.classList.remove('hidden'); // Un-minimize
             highestZ++;
             existingWindow.style.zIndex = highestZ;
             return;
@@ -305,39 +368,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let karizaGallery = photos.kariza.map(url => `<div class="photo-item"><img src="${url}" alt="Foto de Kariza"></div>`).join('');
         let susanaGallery = photos.susana.map(url => `<div class="photo-item"><img src="${url}" alt="Foto de Susana"></div>`).join('');
 
-        const galleryWindow = document.createElement('div');
-        galleryWindow.className = 'window';
-        galleryWindow.id = 'gallery-window';
-        galleryWindow.innerHTML = `
-            <div class="window-title-bar">
-                <img src="img/galería.png" alt="Icon">
-                <h2>Fotos</h2>
-                <span class="window-close-btn">&times;</span>
+        const galleryContent = `
+            <div class="photo-section">
+                <h3>Kariza</h3>
+                <div class="photo-grid">${karizaGallery}</div>
             </div>
-            <div class="window-body">
-                <div class="photo-section">
-                    <h3>Kariza</h3>
-                    <div class="photo-grid">${karizaGallery}</div>
-                </div>
-                <div class="photo-section">
-                    <h3>Susana</h3>
-                    <div class="photo-grid">${susanaGallery}</div>
-                </div>
+            <div class="photo-section">
+                <h3>Susana</h3>
+                <div class="photo-grid">${susanaGallery}</div>
             </div>
         `;
 
-        desktop.appendChild(galleryWindow);
-        makeDraggable(galleryWindow);
+        const galleryWindow = createWindow(
+            windowId,
+            'Fotos',
+            'img/galería.png',
+            galleryContent
+        );
 
-        // Center the new window
-        galleryWindow.style.left = `${(window.innerWidth - galleryWindow.offsetWidth) / 2}px`;
-        galleryWindow.style.top = `${(window.innerHeight - galleryWindow.offsetHeight) / 3}px`;
-
-        // Add event listeners for this window
         galleryWindow.addEventListener('click', (e) => {
-            if (e.target.classList.contains('window-close-btn')) {
-                desktop.removeChild(galleryWindow);
-            }
             if (e.target.tagName === 'IMG' && e.target.closest('.photo-item')) {
                 showFullScreenImage(e.target.src);
             }
