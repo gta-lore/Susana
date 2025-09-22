@@ -15,6 +15,28 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
     updateClock(); // Initial call
 
+    // --- Start Menu ---
+    const startButton = document.getElementById('start-button');
+    const startMenu = document.getElementById('start-menu');
+
+    function toggleStartMenu() {
+        startMenu.classList.toggle('hidden');
+    }
+
+    startButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent click from bubbling up to the window
+        toggleStartMenu();
+    });
+
+    window.addEventListener('click', (e) => {
+        if (!startMenu.classList.contains('hidden')) {
+            // Check if the click was outside the start menu and not on the start button
+            if (!startMenu.contains(e.target) && e.target !== startButton && !startButton.contains(e.target)) {
+                toggleStartMenu();
+            }
+        }
+    });
+
     // --- Global State ---
     let activeTypewriter = null;
 
@@ -240,7 +262,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listeners ---
+    // Desktop shortcuts
     document.getElementById('susana-shortcut').addEventListener('click', () => showStoryScreen('susana'));
     document.getElementById('kariza-shortcut').addEventListener('click', () => showStoryScreen('kariza'));
     document.getElementById('photos-shortcut').addEventListener('click', showGalleryScreen);
+
+    // Start Menu items
+    document.getElementById('start-menu-susana').addEventListener('click', () => {
+        showStoryScreen('susana');
+        if (!startMenu.classList.contains('hidden')) {
+            toggleStartMenu();
+        }
+    });
+    document.getElementById('start-menu-kariza').addEventListener('click', () => {
+        showStoryScreen('kariza');
+        if (!startMenu.classList.contains('hidden')) {
+            toggleStartMenu();
+        }
+    });
+    document.getElementById('start-menu-photos').addEventListener('click', () => {
+        showGalleryScreen();
+        if (!startMenu.classList.contains('hidden')) {
+            toggleStartMenu();
+        }
+    });
 });
