@@ -40,6 +40,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Global State ---
     let activeTypewriter = null;
 
+    // --- Windowing System ---
+    let highestZ = 100;
+
+    function makeDraggable(element) {
+        const titleBar = element.querySelector('.window-title-bar');
+        if (!titleBar) return; // No title bar, not draggable
+
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        titleBar.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            isDragging = true;
+            offsetX = e.clientX - element.getBoundingClientRect().left;
+            offsetY = e.clientY - element.getBoundingClientRect().top;
+
+            // Bring window to front
+            highestZ++;
+            element.style.zIndex = highestZ;
+            
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                let newX = e.clientX - offsetX;
+                let newY = e.clientY - offsetY;
+                element.style.left = `${newX}px`;
+                element.style.top = `${newY}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            document.body.style.userSelect = '';
+        });
+
+        // Also bring to front on any click inside the window
+        element.addEventListener('mousedown', () => {
+            highestZ++;
+            element.style.zIndex = highestZ;
+        });
+    }
+
     // --- Data ---
     const stories = {
         susana: {
@@ -190,51 +234,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Photos Gallery Screen Logic ---
-    const galleryScreen = document.getElementById('gallery-screen');
-
     function showGalleryScreen() {
+        // Prevent duplicate windows
+        if (document.getElementById('gallery-window')) {
+            const existingWindow = document.getElementById('gallery-window');
+            highestZ++;
+            existingWindow.style.zIndex = highestZ;
+            return;
+        }
+
         let karizaGallery = photos.kariza.map(url => `<div class="photo-item"><img src="${url}" alt="Foto de Kariza"></div>`).join('');
         let susanaGallery = photos.susana.map(url => `<div class="photo-item"><img src="${url}" alt="Foto de Susana"></div>`).join('');
 
-        galleryScreen.innerHTML = `
-            <div class="gallery-window">
-                <div class="gallery-title-bar">
-                    <img src="img/galería.png" alt="Icon">
-                    <h2>Fotos</h2>
-                    <span class="gallery-close-btn">&times;</span>
+        const galleryWindow = document.createElement('div');
+        galleryWindow.className = 'window';
+        galleryWindow.id = 'gallery-window';
+        galleryWindow.innerHTML = `
+            <div class="window-title-bar">
+                <img src="img/galería.png" alt="Icon">
+                <h2>Fotos</h2>
+                <span class="window-close-btn">&times;</span>
+            </div>
+            <div class="window-body">
+                <div class="photo-section">
+                    <h3>Kariza</h3>
+                    <div class="photo-grid">${karizaGallery}</div>
                 </div>
-                <div class="gallery-body">
-                    <div class="photo-section">
-                        <h3>Kariza</h3>
-                        <div class="photo-grid">${karizaGallery}</div>
-                    </div>
-                    <div class="photo-section">
-                        <h3>Susana</h3>
-                        <div class="photo-grid">${susanaGallery}</div>
-                    </div>
+                <div class="photo-section">
+                    <h3>Susana</h3>
+                    <div class="photo-grid">${susanaGallery}</div>
                 </div>
             </div>
         `;
 
-        desktop.classList.add('hidden');
-        galleryScreen.classList.remove('hidden');
+        desktop.appendChild(galleryWindow);
+        makeDraggable(galleryWindow);
 
-        // Event listener for closing the gallery or opening the image viewer
-        galleryScreen.addEventListener('click', (e) => {
-            if (e.target.classList.contains('gallery-close-btn') || e.target.classList.contains('gallery-window-backdrop')) {
-                hideGalleryScreen();
+        // Center the new window
+        galleryWindow.style.left = `${(window.innerWidth - galleryWindow.offsetWidth) / 2}px`;
+        galleryWindow.style.top = `${(window.innerHeight - galleryWindow.offsetHeight) / 3}px`;
+
+        // Add event listeners for this window
+        galleryWindow.addEventListener('click', (e) => {
+            if (e.target.classList.contains('window-close-btn')) {
+                desktop.removeChild(galleryWindow);
             }
-
             if (e.target.tagName === 'IMG' && e.target.closest('.photo-item')) {
                 showFullScreenImage(e.target.src);
             }
         });
-    }
-
-    function hideGalleryScreen() {
-        galleryScreen.classList.add('hidden');
-        desktop.classList.remove('hidden');
-        galleryScreen.innerHTML = ''; // Clean up
     }
 
     function showFullScreenImage(src) {

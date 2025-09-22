@@ -239,85 +239,9 @@ body, html {
 }
 
 
-/* --- Gallery Screen (Win 11 Style) --- */
-#gallery-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(20, 20, 25, 0.6);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease-out;
-    z-index: 1000;
-}
+/* --- Gallery Screen styles removed, now uses generic .window --- */
 
-.gallery-window {
-    width: 90%;
-    height: 90%;
-    background: rgba(40, 40, 50, 0.75);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    animation: fadeInScaleUp 0.4s ease-out;
-}
-
-.gallery-title-bar {
-    background: rgba(30, 30, 40, 0.8);
-    color: #f0f0f0;
-    padding: 8px 15px;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-}
-
-.gallery-title-bar img {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-}
-
-.gallery-title-bar h2 {
-    font-size: 1em;
-    font-weight: 600;
-    margin: 0;
-    flex-grow: 1;
-}
-
-.gallery-close-btn {
-    background-color: #C84E43;
-    color: white;
-    border: 1px solid #A53C32;
-    border-radius: 5px;
-    width: 24px;
-    height: 24px;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 22px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.gallery-close-btn:hover {
-    background-color: #E06156;
-}
-
-.gallery-body {
-    padding: 20px;
-    overflow-y: auto;
-    flex-grow: 1;
-}
-
-.gallery-body .photo-section h3 {
+.window-body .photo-section h3 {
     color: #e0e0e0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding-bottom: 8px;
@@ -554,4 +478,74 @@ body, html {
 
 #start-menu li span {
     font-size: 0.95em;
+}
+
+/* --- Generic Window Styles --- */
+.window {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 600px; /* Default width */
+    max-width: 90%;
+    height: 400px; /* Default height */
+    max-height: 80%;
+    background: rgba(40, 40, 50, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fadeInScaleUp 0.4s ease-out;
+    z-index: 100; /* Default z-index */
+}
+
+.window-title-bar {
+    background: rgba(30, 30, 40, 0.8);
+    color: #f0f0f0;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: move; /* Indicates it's draggable */
+}
+
+.window-title-bar img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.window-title-bar h2 {
+    font-size: 1em;
+    font-weight: 600;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.window-close-btn {
+    background-color: #C84E43;
+    color: white;
+    border: 1px solid #A53C32;
+    border-radius: 5px;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.window-close-btn:hover {
+    background-color: #E06156;
+}
+
+.window-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
 }
