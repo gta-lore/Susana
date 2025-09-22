@@ -29,12 +29,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.addEventListener('click', (e) => {
+        // Hide context menu on any click
+        if (!contextMenu.classList.contains('hidden')) {
+            contextMenu.classList.add('hidden');
+        }
+
+        // Hide start menu if open and click is outside
         if (!startMenu.classList.contains('hidden')) {
-            // Check if the click was outside the start menu and not on the start button
             if (!startMenu.contains(e.target) && e.target !== startButton && !startButton.contains(e.target)) {
                 toggleStartMenu();
             }
         }
+    });
+
+    // --- Context Menu ---
+    const contextMenu = document.getElementById('context-menu');
+    const refreshBtn = document.getElementById('context-refresh');
+
+    desktop.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (!startMenu.classList.contains('hidden')) {
+            toggleStartMenu();
+        }
+        contextMenu.style.top = `${e.clientY}px`;
+        contextMenu.style.left = `${e.clientX}px`;
+        contextMenu.classList.remove('hidden');
+    });
+
+    refreshBtn.addEventListener('click', () => {
+        location.reload();
     });
 
     // --- Global State ---

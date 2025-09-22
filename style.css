@@ -435,3 +435,56 @@ body, html {
     overflow-y: auto;
     flex-grow: 1;
 }
+
+/* --- Context Menu Styles --- */
+#context-menu {
+    position: absolute;
+    width: 250px;
+    background: #2b2b2b;
+    border: 1px solid #4a4a4a;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    z-index: 9999; /* Should be on top of everything */
+    padding: 5px;
+    color: #e0e0e0;
+    font-size: 0.9em;
+    animation: fadeIn 0.1s ease-out;
+}
+
+#context-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#context-menu li {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+#context-menu li:not(.separator):hover {
+    background-color: #0078d4; /* Windows blue highlight */
+    color: white;
+}
+
+#context-menu li .fas {
+    width: 24px;
+    text-align: center;
+    margin-right: 10px;
+    color: #c7c7c7;
+}
+
+#context-menu li:hover .fas {
+    color: white;
+}
+
+#context-menu li.separator {
+    height: 1px;
+    background-color: #4a4a4a;
+    margin: 5px 0;
+    padding: 0;
+}
