@@ -46,8 +46,8 @@ body, html {
 
 /* --- Desktop Styles --- */
 .desktop {
-    background-image: url('img/win.jpg');
-    background-size: 100% 100%;
+    background-image: url('https://images.hdqwalls.com/wallpapers/abstract-purple-blue-red-4k-oy.jpg');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     width: 100vw;
