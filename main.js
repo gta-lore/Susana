@@ -68,43 +68,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function makeDraggable(element) {
         const titleBar = element.querySelector('.window-title-bar');
-        if (!titleBar) return; // No title bar, not draggable
+        if (!titleBar) return;
 
         let isDragging = false;
         let offsetX, offsetY;
 
-        titleBar.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            isDragging = true;
-            offsetX = e.clientX - element.getBoundingClientRect().left;
-            offsetY = e.clientY - element.getBoundingClientRect().top;
-
-            // Bring window to front
+        const bringToFront = () => {
             highestZ++;
             element.style.zIndex = highestZ;
-            
-            document.body.style.userSelect = 'none';
-        });
+        };
 
-        document.addEventListener('mousemove', (e) => {
+        const dragStart = (e) => {
+            isDragging = true;
+            bringToFront();
+
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+            offsetX = clientX - element.getBoundingClientRect().left;
+            offsetY = clientY - element.getBoundingClientRect().top;
+
+            document.body.style.userSelect = 'none'; // Helps prevent text selection during drag
+        };
+
+        const dragMove = (e) => {
             if (isDragging) {
-                let newX = e.clientX - offsetX;
-                let newY = e.clientY - offsetY;
+                // We prevent default on move to stop scrolling while dragging a window
+                e.preventDefault();
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+                let newX = clientX - offsetX;
+                let newY = clientY - offsetY;
                 element.style.left = `${newX}px`;
                 element.style.top = `${newY}px`;
             }
-        });
+        };
 
-        document.addEventListener('mouseup', () => {
+        const dragEnd = () => {
             isDragging = false;
             document.body.style.userSelect = '';
-        });
+        };
 
-        // Also bring to front on any click inside the window
-        element.addEventListener('mousedown', () => {
-            highestZ++;
-            element.style.zIndex = highestZ;
+        // Mouse events
+        titleBar.addEventListener('mousedown', dragStart);
+        
+        // Touch events { passive: false } is important to allow preventDefault
+        titleBar.addEventListener('touchstart', dragStart, { passive: false });
+
+        // Move and End events on the whole document to allow dragging outside the window
+        document.addEventListener('mousemove', dragMove);
+        document.addEventListener('touchmove', dragMove, { passive: false });
+
+        document.addEventListener('mouseup', dragEnd);
+        document.addEventListener('touchend', dragEnd);
+        document.addEventListener('touchcancel', dragEnd);
+
+        // Also bring to front on any click/touch inside the window, but not on the title bar itself to avoid double-counting
+        element.addEventListener('mousedown', (e) => {
+            if (!titleBar.contains(e.target)) {
+                bringToFront();
+            }
         });
+        element.addEventListener('touchstart', (e) => {
+             if (!titleBar.contains(e.target)) {
+                bringToFront();
+            }
+        }, { passive: true });
     }
 
     // --- Data ---
