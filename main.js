@@ -2,6 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const desktop = document.querySelector('.desktop');
     const storyScreen = document.getElementById('story-screen');
+    const clockElement = document.getElementById('clock');
+
+    // --- Clock ---
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        clockElement.textContent = `${hours}:${minutes}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call
 
     // --- Global State ---
     let activeTypewriter = null;

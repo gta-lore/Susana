@@ -57,7 +57,7 @@ body, html {
     flex-wrap: wrap;
     align-content: flex-start;
     gap: 15px;
-    padding: 15px;
+    padding: 15px 15px 55px 15px; /* Adjusted for taskbar */
     box-sizing: border-box;
 }
 
@@ -448,4 +448,51 @@ body, html {
     .photo-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
+}
+
+/* --- Taskbar Styles --- */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: rgba(25, 25, 30, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 1000;
+    animation: fadeIn 0.5s; /* Fade in the taskbar */
+}
+
+#start-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 4px;
+}
+
+#start-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#start-button .fa-windows {
+    color: #f0f0f0;
+    font-size: 1.2em;
+}
+
+#clock {
+    color: #f0f0f0;
+    font-size: 0.85em;
+    font-weight: 500;
+    padding: 0 10px;
 }
