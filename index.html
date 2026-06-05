@@ -1,62 +1,1129 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kariza Sanmiong | Historias Independientes</title>
+  <meta name="description" content="Las historias de los personajes de rol de Naominavarro.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --void:       #07060d;
+      --deep:       #0e0c1a;
+      --surface:    #15122a;
+      --glass:      rgba(255,255,255,0.04);
+      --glass-b:    rgba(255,255,255,0.08);
+      --border:     rgba(255,255,255,0.07);
+      --gold:       #e8c87a;
+      --gold-dim:   #a88d4e;
+      --magenta:    #d94fa0;
+      --violet:     #8b5cf6;
+      --cyan:       #06d6db;
+      --text:       #ede8f5;
+      --muted:      #9b94b8;
+      --dim:        #5c5475;
+      --nav-h:      64px;
+      --r:          10px;
+      --transition: 0.35s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ─── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; color-scheme: dark; }
+
+    body {
+      background-color: var(--void);
+      color: var(--text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.15rem;
+      line-height: 1.75;
+      overflow-x: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    /* ─── CANVAS STARS ────────────────────────────────────────── */
+    #starfield {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    header {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      height: var(--nav-h);
+      z-index: 900;
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      background: rgba(7,6,13,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-crown { color: var(--magenta); font-size: .9rem; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      transition: color var(--transition), background var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .nav-links a i { font-size: .65rem; }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold);
+      background: rgba(232,200,122,.08);
+    }
+
+    .nav-links a.active {
+      position: relative;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 14px;
+      right: 14px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--magenta), var(--gold));
+    }
+
+    /* Mobile hamburger */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── SECTIONS ────────────────────────────────────────────── */
+    .page {
+      display: none;
+      min-height: calc(100vh - var(--nav-h));
+      position: relative;
+      z-index: 1;
+    }
+
+    .page.active { display: block; animation: pageIn .45s ease both; }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── VIDEO BG ────────────────────────────────────────────── */
+    .video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .18;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ─── HERO / INICIO ───────────────────────────────────────── */
+    .hero {
+      min-height: calc(100vh - var(--nav-h));
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 40%, rgba(139,92,246,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner { position: relative; z-index: 1; max-width: 760px; }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp .6s .2s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.2rem, 6vw, 4.4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: .02em;
+      background: linear-gradient(135deg, var(--gold) 0%, #fff5d6 35%, var(--magenta) 70%, var(--violet) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      opacity: 0;
+      animation: fadeUp .7s .35s ease both;
+    }
+
+    .hero-sub {
+      font-family: 'Cinzel', serif;
+      font-size: .78rem;
+      letter-spacing: .2em;
+      color: var(--magenta);
+      text-transform: uppercase;
+      margin-top: 16px;
+      opacity: 0;
+      animation: fadeUp .6s .5s ease both;
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 32px auto;
+      opacity: 0;
+      animation: fadeUp .6s .6s ease both;
+    }
+
+    .profile-ring {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin: 0 auto 32px;
+      padding: 3px;
+      background: conic-gradient(from 0deg, var(--magenta), var(--violet), var(--cyan), var(--gold), var(--magenta));
+      box-shadow: 0 0 40px rgba(139,92,246,.35), 0 0 80px rgba(217,79,160,.15);
+      animation: spinBorder 8s linear infinite, fadeUp .7s .15s ease both;
+      opacity: 0;
+    }
+
+    @keyframes spinBorder {
+      to { background: conic-gradient(from 360deg, var(--magenta), var(--violet), var(--cyan), var(--gold), var(--magenta)); }
+    }
+
+    .profile-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp .6s .7s ease both;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 36px;
+      padding: 12px 28px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 3px;
+      font-family: 'Cinzel', serif;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      background: rgba(232,200,122,.05);
+      cursor: pointer;
+      transition: all var(--transition);
+      opacity: 0;
+      animation: fadeUp .6s .85s ease both;
+    }
+
+    .hero-cta:hover {
+      background: rgba(232,200,122,.12);
+      box-shadow: 0 0 24px rgba(232,200,122,.2);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── CONTAINER ───────────────────────────────────────────── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── CHARACTER HEADER ────────────────────────────────────── */
+    .char-header {
+      padding: 72px 0 48px;
+      text-align: center;
+    }
+
+    .char-header .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-dim);
+      object-fit: cover;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(217,79,160,.3);
+    }
+
+    .char-header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: var(--gold);
+      letter-spacing: .04em;
+    }
+
+    .char-header .tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--violet);
+      border: 1px solid rgba(139,92,246,.3);
+      padding: 3px 12px;
+      border-radius: 30px;
+    }
+
+    /* ─── STORY CARDS ─────────────────────────────────────────── */
+    .story-wrap {
+      padding: 0 0 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px 36px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      content-visibility: auto;
+      contain-intrinsic-size: 0 200px;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r);
+      background: linear-gradient(135deg, rgba(232,200,122,.04), rgba(217,79,160,.04));
+      opacity: 0;
+      transition: opacity var(--transition);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      border-color: rgba(232,200,122,.25);
+      box-shadow: 0 4px 32px rgba(217,79,160,.12), 0 0 0 1px rgba(232,200,122,.06);
+      transform: translateY(-2px);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    /* Left accent bar */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 0;
+      width: 3px;
+      height: 60%;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      border-radius: 3px;
+      opacity: .5;
+      transition: opacity var(--transition), height var(--transition);
+    }
+
+    .card:hover::after { opacity: 1; height: 80%; }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-title i {
+      color: var(--magenta);
+      font-size: .85rem;
+      width: 18px;
+      text-align: center;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .hi { color: var(--cyan); font-weight: 600; font-style: italic; }
+
+    /* pending */
+    .pending {
+      text-align: center;
+      padding: 80px 30px;
+    }
+
+    .pending-icon {
+      font-size: 3.5rem;
+      color: var(--dim);
+      margin-bottom: 20px;
+      animation: pulse 3s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: .4; transform: scale(1); }
+      50%      { opacity: .7; transform: scale(1.05); }
+    }
+
+    .pending h2 {
+      font-family: 'Cinzel', serif;
+      color: var(--dim);
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .pending p { color: var(--dim); font-style: italic; }
+
+    /* ─── AUDIO BTN ───────────────────────────────────────────── */
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 22px;
+      background: rgba(139,92,246,.12);
+      border: 1px solid rgba(139,92,246,.35);
+      border-radius: 4px;
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--violet);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .play-btn:hover {
+      background: rgba(139,92,246,.22);
+      box-shadow: 0 0 16px rgba(139,92,246,.25);
+    }
+
+    /* ─── GALLERY ─────────────────────────────────────────────── */
+    .gallery-page { padding: 72px 0 100px; }
+
+    .gallery-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 9px 22px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: var(--void);
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(232,200,122,.3);
+    }
+
+    .gallery-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .gallery-grid.active {
+      display: grid;
+      animation: pageIn .4s ease both;
+    }
+
+    .gallery-item {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-item::after {
+      content: '\f065';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      color: white;
+      background: rgba(7,6,13,.55);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .gallery-item:hover::after { opacity: 1; }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.07); }
+
+    /* ─── MODAL (native <dialog>) ─────────────────────────────── */
+    dialog#lightbox {
+      background: rgba(7,6,13,.95);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0;
+      max-width: min(760px, 95vw);
+      width: 100%;
+      max-height: 92vh;
+      overflow: hidden;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    dialog#lightbox::backdrop {
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .lightbox-inner {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lightbox-img {
+      display: block;
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+
+    .lightbox-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .lb-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color var(--transition);
+    }
+
+    .lb-close:hover { color: var(--text); }
+
+    .lb-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid rgba(232,200,122,.3);
+      padding: 7px 18px;
+      border-radius: 3px;
+      transition: all var(--transition);
+    }
+
+    .lb-download:hover {
+      background: rgba(232,200,122,.1);
+      box-shadow: 0 0 12px rgba(232,200,122,.2);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px 28px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .socials a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      transition: all var(--transition);
+    }
+
+    .socials a:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+      box-shadow: 0 0 14px rgba(232,200,122,.2);
+      transform: translateY(-2px);
+    }
+
+    .copyright {
+      font-family: 'Cinzel', serif;
+      font-size: .63rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+
+    /* ─── INLINE AVATAR ───────────────────────────────────────── */
+    .inline-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-dim);
+      object-fit: cover;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .nav-links {
+        position: fixed;
+        inset-block-start: var(--nav-h);
+        inset-inline-end: -100%;
+        width: 260px;
+        height: calc(100vh - var(--nav-h));
+        background: rgba(14,12,26,.97);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border-left: 1px solid var(--border);
+        transition: inset-inline-end .3s ease;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+
+      .nav-links.open { inset-inline-end: 0; }
+      .nav-links a { font-size: .8rem; padding: 10px 20px; }
+      .menu-toggle { display: flex; }
+    }
+
+    @media (max-width: 580px) {
+      .card { padding: 22px 20px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
 </head>
+
 <body>
+  <canvas id="starfield"></canvas>
 
-    <div id="taskbar">
-        <div id="start-button">
-            <i class="fab fa-windows"></i>
+  <header>
+    <nav>
+      <span class="logo">
+        <i class="fas fa-crown logo-crown"></i>
+        HISTORIAS
+      </span>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="#" class="active" data-page="inicio"><i class="fas fa-home"></i>Inicio</a></li>
+        <li><a href="#" data-page="kariza"><i class="fas fa-user"></i>Kariza</a></li>
+        <li><a href="#" data-page="susana"><i class="fas fa-user-friends"></i>Susana</a></li>
+        <li><a href="#" data-page="matilda"><i class="fas fa-star"></i>Matilda</a></li>
+        <li><a href="#" data-page="galeria"><i class="fas fa-images"></i>Galería</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── INICIO ─────────────────────────────────────────── -->
+  <div id="inicio" class="page active">
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="videos/inicio.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Naominavarro · Universo de Rol</p>
+
+        <div class="profile-ring">
+          <img src="https://i.imgur.com/zYIeYyw.jpeg"
+               alt="Personaje de Naominavarro"
+               fetchpriority="high"
+               width="200" height="200">
         </div>
-        <div id="clock"></div>
+
+        <h1 class="hero-title">Kariza Sanmiong</h1>
+        <p class="hero-sub">Historias Independientes</p>
+
+        <div class="hero-divider"></div>
+
+        <p class="hero-desc">
+          Bienvenido/a. Aquí encontrarás las historias de los personajes de rol de Naominavarro.
+        </p>
+
+        <button class="hero-cta" data-page="kariza">
+          <i class="fas fa-book-open"></i>
+          Comenzar a leer
+        </button>
+      </div>
     </div>
+  </div>
 
-    <div id="start-menu" class="hidden">
-        <ul>
-            <li id="start-menu-susana"><img src="img/folder_icon.png" /><span>Susana sis</span></li>
-            <li id="start-menu-kariza"><img src="img/folder_icon.png" /><span>kariza</span></li>
-            <li id="start-menu-photos"><img src="img/galería.png" /><span>Fotos</span></li>
-            <li id="start-menu-browser"><img src="img/browser_icon.svg" /><span>Navegador</span></li>
-        </ul>
+  <!-- ── KARIZA ─────────────────────────────────────────── -->
+  <div id="kariza" class="page">
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="videos/kariza.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+      <div class="char-header">
+        <img src="kariza.jpg" alt="Kariza Sanmiong" class="avatar">
+        <h1>Kariza Sanmiong</h1>
+        <span class="tag">27 años · Mexicana-Coreana</span>
+      </div>
+
+      <div class="story-wrap">
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-seedling"></i>Origen y Familia</h2>
+          <p>Su padre coreano <span class="hi">Min Sanmiong</span> y madre mexicana <span class="hi">Rebecca Mun</span> tuvieron dos hijos; Kariza es la mayor, su hermano <span class="hi">Min-So</span> tiene 4 años.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-child"></i>Infancia y Adolescencia</h2>
+          <p>Creció rodeada de lujos, instruida en tiro desde pequeña y preparada para manejar situaciones difíciles. Era observadora e inteligente, aunque muy distraída.</p>
+          <p>Durante la adolescencia sus objetivos vitales cambiaron, lo que generó conflicto con sus padres, quienes tenían planes definidos para ella.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-feather-alt"></i>Independencia</h2>
+          <p>La ruptura con su familia la obligó a salir de Corea a los 23 años. Su padre le retiró todo el apoyo económico. Su sueño era ser artista plástica, pero terminó ingresando a la LSPD, donde llegó al puesto de <span class="hi">Sub-inspectora Jefe</span> mediante un acuerdo personal con el jefe a cargo, con la oportunidad de infiltrarse para investigar tráfico de drogas.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-heart"></i>Policía y Amor</h2>
+          <p>En la policía conoció a un chico — nombre desconocido — del que se enamoró profundamente porque le recordaba a su ex novio desaparecido. El paradero de ese chico sigue siendo un misterio.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i>Secuestro y Traición</h2>
+          <p>Sufrió un secuestro junto con su mejor amiga Rosie que casi la mata. El trauma la dejó con aversión al contacto físico. Cuando intentó descubrir la verdad, la tildaron de inestable. Descubrió que todos le mentían, incluida su pareja, quien ocultaba información crucial para ella.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-tint"></i>Sufrimiento y Pérdida</h2>
+          <p>Mentiras, maltrato en la relación, rupturas de amistad. Vivió la muerte de su mejor amiga, su mejor amigo, su primer amor. Fue acusada de asesinato junto con su esposo. Un embarazo casi la mata.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-exchange-alt"></i>Transformación</h2>
+          <p>Todo esto le arrebató la felicidad progresivamente. Fue cayendo hasta quitarse la máscara de buena persona y arrebatarle la vida a alguien.</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-hands-helping"></i>Susana Sis</h2>
+          <p>Conoció a <span class="hi">Susana Sis</span>, quien a pesar de conocer sus secretos y debilidades la ayudó sin juzgarla. Se ganó el corazón de Kariza. Se apoyaron mutuamente para salir adelante. <em>(Esto fue lo último que se supo de ella IC.)</em></p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-question-circle"></i>Misterio Actual</h2>
+          <p>Se desconoce qué pasó después del coma de Kariza.</p>
+          <p>Lo que se sabe: vive actualmente en Corea del Sur, tiene tres hijos. Se desconoce a qué se dedica, qué pasó con su familia, su esposo, o por qué abandonó la LSPD.</p>
+        </div>
+
+      </div>
     </div>
+  </div>
 
-    <div class="desktop">
-        <div class="shortcut" id="susana-shortcut">
-            <img src="img/folder_icon.png" alt="Icono de carpeta">
-            <span>Susana sis</span>
+  <!-- ── SUSANA ───────────────────────────────────────────── -->
+  <div id="susana" class="page">
+    <div class="container">
+      <div class="char-header">
+        <img src="susana.jpg" alt="Susana Sis" class="avatar">
+        <h1>Susana Sis</h1>
+        <span class="tag">86 años · Mexicana</span>
+      </div>
+
+      <div class="story-wrap">
+        <div class="card">
+          <h2 class="card-title"><i class="fas fa-book"></i>Historia Conocida</h2>
+          <p>Estuvo casada con <span class="hi">Vincent</span> durante 51 años. Vincent la engañó con tres mujeres; los hijos que tuvo con ellas siguen siendo desconocidos. Vincent falleció hace 16 años. Fue su amigo <span class="hi">Rupert</span> quien le reveló la infidelidad.</p>
+          <p>Estuvo en Vietnam, aunque no es veterana de guerra. Vivió en Nueva York durante un período de tiempo desconocido.</p>
+          <p>Tuvo tres hijos; solo se ha mencionado a dos. Se sabe que Kariza está buscando a uno de ellos.</p>
+          <p>Tuvo un nieto llamado <span class="hi">Enzo</span>, quien también murió. La causa es desconocida.</p>
+          <p>Adoptó a <span class="hi">Kariza Sanmiong</span> como hija a los 24 años de ella (<em>Salchicha Salmón</em>). Gracias a esto, tiene nietos que la esperan en Corea.</p>
+          <p>La búsqueda de su hijo continúa.</p>
+
+          <button id="playSusanaBtn" class="play-btn">
+            <i class="fas fa-play" id="playIcon"></i>
+            <span id="playLabel">Play</span>
+          </button>
+          <audio id="susanaAudio" src="gata.mp3"></audio>
         </div>
-        <div class="shortcut" id="kariza-shortcut">
-            <img src="img/folder_icon.png" alt="Icono de carpeta">
-            <span>kariza</span>
-        </div>
-        <div class="shortcut" id="photos-shortcut">
-            <img src="img/galería.png" alt="Icono de Fotos">
-            <span>Fotos</span>
-        </div>
-        <div class="shortcut" id="browser-shortcut">
-            <img src="img/browser_icon.svg" alt="Icono de Navegador">
-            <span>Navegador</span>
-        </div>
+      </div>
     </div>
+  </div>
 
-
-
-
-
-    <div id="context-menu" class="hidden">
-        <ul>
-            <li id="context-refresh"><i class="fas fa-sync-alt"></i> Actualizar</li>
-            <li class="separator"></li>
-            <li><i class="fas fa-palette"></i> Cambiar fondo (Próximamente)</li>
-            <li><i class="fas fa-folder-plus"></i> Nueva carpeta (Próximamente)</li>
-        </ul>
+  <!-- ── MATILDA ─────────────────────────────────────────── -->
+  <div id="matilda" class="page">
+    <div class="container">
+      <div class="pending">
+        <div class="pending-icon"><i class="fas fa-hourglass-half"></i></div>
+        <h2>Matilda</h2>
+        <p>Contenido pendiente. Próximamente.</p>
+      </div>
     </div>
+  </div>
 
-    <script src="main.js"></script>
+  <!-- ── GALERÍA ─────────────────────────────────────────── -->
+  <div id="galeria" class="page">
+    <div class="container gallery-page">
+      <div class="gallery-tabs">
+        <button class="tab-btn active" data-gallery="gkariza">Kariza</button>
+        <button class="tab-btn" data-gallery="gsusana">Susana</button>
+        <button class="tab-btn" data-gallery="gmatilda">Matilda</button>
+      </div>
+
+      <div id="gkariza" class="gallery-grid active">
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/rppFXMfC/zfp-SSNwrvzuc-png.webp" alt="Kariza 1" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/KzkGjQS1/Untitled-Project.jpg" alt="Kariza 2" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/cJ51d2jq/c-Yl-TOMJEAlan-png.webp" alt="Kariza 3" loading="lazy">
+        </div>
+      </div>
+
+      <div id="gsusana" class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/PrhGwf5k/Uf-RGv-Zp91iz4.webp" alt="Susana 1" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/kg1LzxFn/ry-Ltrbfj4-Qy-I.webp" alt="Susana 2" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/8zPqZyvK/LUD1-BO9-DYVl-R.webp" alt="Susana 3" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/J7jV0Hmq/HQ8drla-Xevf-S.webp" alt="Susana 4" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.postimg.cc/sXq24q9P/rkrz5m.jpg" alt="Susana 5" loading="lazy">
+        </div>
+      </div>
+
+      <div id="gmatilda" class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://i.imgur.com/mJtVvWc.jpeg" alt="Matilda 1" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.imgur.com/d2zK1gQ.jpeg" alt="Matilda 2" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://i.imgur.com/u8a7a7A.jpeg" alt="Matilda 3" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LIGHTBOX ────────────────────────────────────────── -->
+  <dialog id="lightbox" aria-label="Imagen ampliada">
+    <div class="lightbox-inner">
+      <img class="lightbox-img" id="lbImg" src="" alt="Imagen ampliada">
+      <div class="lightbox-bar">
+        <button class="lb-close" id="lbClose" aria-label="Cerrar">
+          <i class="fas fa-times"></i> Cerrar
+        </button>
+        <a class="lb-download" id="lbDownload" download target="_blank" rel="noopener">
+          <i class="fas fa-download"></i> Descargar
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ── FOOTER ──────────────────────────────────────────── -->
+  <footer>
+    <div class="socials">
+      <a href="https://www.twitch.tv/naominnavarro?sr=a" aria-label="Twitch" rel="noopener">
+        <i class="fab fa-twitch"></i>
+      </a>
+      <a href="#" aria-label="Twitter/X">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.instagram.com/naomi_navarro?igsh=MW56aGZ0bnQ0cHN3eg==" aria-label="Instagram" rel="noopener">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+  /* ── STARFIELD CANVAS ─────────────────────────────────── */
+  (function () {
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const COUNT = 120;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = Array.from({ length: COUNT }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + .2,
+        a: Math.random(),
+        speed: Math.random() * .004 + .001,
+        phase: Math.random() * Math.PI * 2,
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const t = performance.now() / 1000;
+      for (const s of stars) {
+        const alpha = (.4 + .6 * Math.sin(t * s.speed * 6 + s.phase)) * s.a;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(232,200,122,${alpha})`;
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    initStars();
+    draw();
+
+    const ro = new ResizeObserver(() => { resize(); initStars(); });
+    ro.observe(document.documentElement);
+  })();
+
+  /* ── NAVIGATION ───────────────────────────────────────── */
+  const pages     = document.querySelectorAll('.page');
+  const navLinks  = document.querySelectorAll('.nav-links a');
+  const navList   = document.getElementById('navLinks');
+  const toggle    = document.getElementById('menuToggle');
+
+  function showPage(id) {
+    pages.forEach(p => p.classList.remove('active'));
+    navLinks.forEach(a => a.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+    document.querySelectorAll(`[data-page="${id}"]`).forEach(a => a.classList.add('active'));
+    window.scrollTo({ top: 0 });
+    // close mobile nav
+    navList.classList.remove('open');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      showPage(el.dataset.page);
+    });
+  });
+
+  toggle.addEventListener('click', () => {
+    const open = navList.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  /* ── GALLERY TABS ─────────────────────────────────────── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.gallery-grid').forEach(g => g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.gallery)?.classList.add('active');
+    });
+  });
+
+  /* ── LIGHTBOX ─────────────────────────────────────────── */
+  const lightbox  = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lbImg');
+  const lbDl      = document.getElementById('lbDownload');
+  const lbClose   = document.getElementById('lbClose');
+
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const src = item.querySelector('img').src;
+      lbImg.src = src;
+      lbDl.href = src;
+      lightbox.showModal();
+    });
+  });
+
+  lbClose.addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.close(); });
+
+  /* ── AUDIO ────────────────────────────────────────────── */
+  const playBtn   = document.getElementById('playSusanaBtn');
+  const audio     = document.getElementById('susanaAudio');
+  const playIcon  = document.getElementById('playIcon');
+  const playLabel = document.getElementById('playLabel');
+
+  if (playBtn && audio) {
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().then(() => {
+          playIcon.className = 'fas fa-pause';
+          playLabel.textContent = 'Pause';
+        }).catch(() => {});
+      } else {
+        audio.pause();
+        playIcon.className = 'fas fa-play';
+        playLabel.textContent = 'Play';
+      }
+    });
+
+    audio.addEventListener('ended', () => {
+      playIcon.className = 'fas fa-play';
+      playLabel.textContent = 'Play';
+    });
+  }
+  </script>
 </body>
 </html>
